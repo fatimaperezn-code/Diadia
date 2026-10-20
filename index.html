@@ -3,80 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#7c6bb0">
-<title>Mi Día Flexible</title>
+<meta name="theme-color" content="#8A7BB8">
+<title>Mi Día Premium</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" defer></script>
 <style>
-  :root { --bg: #f7f4fc; --card: #ffffff; --primary: #7c6bb0; --text: #2d2a3e; --line: #e6e1f0; --ok: #4caf7a; --warn: #e07a5f; }
-  @media (prefers-color-scheme: dark) { :root { --bg: #1a1725; --card: #2a2438; --text: #f0ecf9; --line: #3a3350; } }
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, sans-serif; }
-  body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 80px; }
-  header { position: sticky; top: 0; z-index: 10; background: linear-gradient(135deg, #7c6bb0, #a08dd4); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 15px 15px; }
-  header h1 { margin: 0; font-size: 1.1rem; }
-  #pct { font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem; }
-  main { padding: 15px; max-width: 600px; margin: 0 auto; }
+  :root { --bg: #F4F1FA; --card: #FFFFFF; --primary: #8A7BB8; --primary-dark: #6A5B98; --text: #2D2A3E; --muted: #8A869C; --line: #E8E4F2; --ok: #5CB885; --warn: #E67A5F; --blue: #5B9BD5; }
+  @media (prefers-color-scheme: dark) { :root { --bg: #181524; --card: #252134; --text: #F0ECF9; --muted: #9C95B0; --line: #3A3350; } }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 85px; transition: background 0.3s; }
+  header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--primary), #B0A3D4); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(138, 123, 184, 0.2); }
+  header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.5px; }
+  #pct { font-weight: 700; background: rgba(255,255,255,0.25); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; backdrop-filter: blur(5px); }
+  main { padding: 15px; max-width: 700px; margin: 0 auto; }
   .view { display: none; }
-  .view.active { display: block; animation: fadeIn 0.3s; }
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
-  .section { margin-bottom: 20px; }
-  .section h2 { font-size: 1rem; margin: 0 0 10px 5px; color: var(--primary); display: flex; gap: 8px; }
-  .card { background: var(--card); border-radius: 12px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); overflow: hidden; }
-  .item { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); padding: 12px; }
+  .view.active { display: block; animation: slideUp 0.3s ease; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  
+  .category-group { margin-bottom: 12px; background: var(--card); border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden; border: 1px solid var(--line); }
+  .category-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 1rem; color: var(--primary-dark); transition: background 0.2s; }
+  .category-header:active { background: var(--bg); }
+  .category-header .arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--muted); }
+  .category-group.open .arrow { transform: rotate(180deg); }
+  .category-content { display: none; border-top: 1px solid var(--line); }
+  .category-group.open .category-content { display: block; animation: fadeIn 0.2s; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .item { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); padding: 14px 16px; }
   .item:last-child { border-bottom: none; }
-  .item-top { display: flex; justify-content: space-between; align-items: center; }
-  .label { font-size: 0.95rem; font-weight: 500; flex: 1; }
-  .toggle { width: 50px; height: 28px; border-radius: 14px; background: #ccc; position: relative; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+  .item-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
+  .label { font-size: 0.95rem; font-weight: 500; flex: 1; min-width: 120px; }
+  
+  .toggle { width: 52px; height: 30px; border-radius: 15px; background: #D1C9E0; position: relative; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
   .toggle.on { background: var(--ok); }
-  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: 0.2s; }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
   .toggle.on::after { left: 25px; }
-  .scale { display: flex; gap: 3px; margin-top: 8px; }
-  .scale button { flex: 1; height: 28px; border: 1px solid var(--line); background: var(--bg); border-radius: 6px; font-size: 0.75rem; cursor: pointer; color: var(--text); }
-  .scale button.on { background: var(--primary); color: white; border-color: var(--primary); }
-  .stepper { display: flex; align-items: center; gap: 10px; margin-top: 8px; background: var(--bg); padding: 5px; border-radius: 8px; width: fit-content; }
-  .stepper button { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); font-size: 1.2rem; cursor: pointer; color: var(--text); }
-  .stepper span { font-weight: bold; min-width: 60px; text-align: center; font-size: 0.85rem; }
-  .input-text { width: 100%; padding: 8px; margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
-  nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; border-top: 1px solid var(--line); z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
-  nav button { flex: 1; background: none; border: none; padding: 10px 0; color: #888; cursor: pointer; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-  nav button.active { color: var(--primary); font-weight: bold; }
-  nav button span { font-size: 1.3rem; }
-  .btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-size: 0.9rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
-  .btn.red { background: var(--warn); }
-  .report { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-  .report h3 { margin: 0 0 10px; font-size: 1rem; color: var(--primary); }
-  .config-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); gap: 10px; flex-wrap: wrap; }
-  .config-item input[type="text"] { flex: 1; padding: 5px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--text); min-width: 120px; }
-  .config-item select { padding: 5px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--text); }
-  .del-btn { background: #ffcccc; color: #cc0000; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
-  .add-btn { background: #e6f7e6; color: #2e7d32; border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
+  
+  .scale { display: flex; gap: 4px; margin-top: 10px; width: 100%; }
+  .scale button { flex: 1; height: 32px; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; font-size: 0.8rem; font-weight: 500; cursor: pointer; color: var(--text); transition: 0.2s; }
+  .scale button.on { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
+  
+  .stepper { display: flex; align-items: center; gap: 12px; margin-top: 8px; background: var(--bg); padding: 6px 12px; border-radius: 12px; width: fit-content; border: 1px solid var(--line); }
+  .stepper button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); font-size: 1.2rem; cursor: pointer; color: var(--text); display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .stepper button:active { transform: scale(0.9); }
+  .stepper span { font-weight: 600; min-width: 70px; text-align: center; font-size: 0.9rem; color: var(--primary-dark); }
+  
+  /* Cronómetro */
+  .timer-controls { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 8px; flex-wrap: wrap; }
+  .timer-btn { padding: 8px 16px; border-radius: 10px; border: none; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 0.85rem; }
+  .timer-btn.start { background: var(--ok); }
+  .timer-btn.stop { background: var(--warn); }
+  .timer-display { font-family: monospace; font-size: 1.1rem; font-weight: bold; color: var(--primary); background: var(--bg); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; }
+  
+  /* Modal tiempo manual */
+  .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(2px); }
+  .modal.active { display: flex; }
+  .modal-content { background: var(--card); padding: 20px; border-radius: 16px; width: 100%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+  .modal-content h3 { margin: 0 0 15px; color: var(--primary); text-align: center; }
+  .time-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
+  .time-inputs label { display: flex; flex-direction: column; font-size: 0.8rem; color: var(--muted); }
+  .time-inputs input { padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 1rem; margin-top: 5px; }
+
+  .input-text { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
+  .input-text:focus { outline: none; border-color: var(--primary); }
+
+  nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; border-top: 1px solid var(--line); z-index: 100; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
+  nav button { flex: 1; background: none; border: none; padding: 12px 0; color: var(--muted); cursor: pointer; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500; transition: 0.2s; }
+  nav button.active { color: var(--primary); }
+  nav button span { font-size: 1.4rem; transition: transform 0.2s; }
+  nav button.active span { transform: translateY(-2px); }
+
+  .report { background: var(--card); padding: 16px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--line); }
+  .report h3 { margin: 0 0 12px; font-size: 1rem; color: var(--primary-dark); }
+  .btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 10px rgba(138, 123, 184, 0.3); }
+  .btn:active { transform: scale(0.98); }
+  .btn.outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; }
+  .btn.red { background: var(--warn); box-shadow: 0 4px 10px rgba(230, 122, 95, 0.3); }
+  
+  .config-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); gap: 10px; flex-wrap: wrap; }
+  .config-item input[type="text"] { flex: 1; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); min-width: 100px; }
+  .config-item select { padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); }
+  .del-btn { background: #FFE5E5; color: #D32F2F; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
+  .add-btn { background: #E8F5E9; color: #2E7D32; border: none; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: 600; font-size: 0.85rem; }
+  
+  .meta-list { max-height: 250px; overflow-y: auto; border: 1px solid var(--line); padding: 12px; border-radius: 10px; background: var(--bg); margin-bottom: 10px; }
+  .meta-list label { display: flex; gap: 10px; padding: 6px 0; font-size: 0.9rem; align-items: center; }
+  
+  .filter-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+  .filter-row select { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 0.9rem; }
+  #chart-container { width: 100%; overflow-x: auto; }
   canvas { max-width: 100%; height: auto; margin-top: 10px; }
-  .meta-list { max-height: 200px; overflow-y: auto; border: 1px solid var(--line); padding: 10px; border-radius: 8px; background: var(--bg); margin-bottom: 10px; }
-  .meta-list label { display: flex; gap: 8px; padding: 4px 0; font-size: 0.85rem; }
+  .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: bold; font-size: 1.2rem; backdrop-filter: blur(3px); }
 </style>
 </head>
 <body>
+<div class="loading-overlay" id="pdf-loading">Generando PDF... ⏳</div>
+
+<!-- Modal para tiempo manual -->
+<div class="modal" id="timeModal">
+  <div class="modal-content">
+    <h3 id="modal-title">Apuntar Tiempo</h3>
+    <div class="time-inputs">
+      <label>Inicio: <input type="time" id="inp-start"></label>
+      <label>Fin: <input type="time" id="inp-end"></label>
+    </div>
+    <button class="btn" onclick="saveManualTime()">Guardar Tiempo</button>
+    <button class="btn outline" onclick="closeModal()">Cancelar</button>
+  </div>
+</div>
+
 <header>
-  <h1>🌸 Mi Día Flexible</h1>
+  <h1>🌸 Mi Día Premium</h1>
   <div id="pct">0%</div>
 </header>
 
 <main>
   <div id="view-hoy" class="view active"></div>
-  <div id="view-informes" class="view"><div id="reportes"></div></div>
+  
+  <div id="view-informes" class="view">
+    <div class="report">
+      <h3>📊 Generador de Informes</h3>
+      <div class="filter-row">
+        <select id="rep-tipo" onchange="updateRepFiltros()">
+          <option value="cat">Por Categoría</option>
+          <option value="item">Por Actividad</option>
+          <option value="dia">Resumen por Día</option>
+        </select>
+        <select id="rep-tiempo" onchange="generarInforme()">
+          <option value="7">Últimos 7 días</option>
+          <option value="30">Últimos 30 días</option>
+          <option value="mes_act">Mes actual</option>
+        </select>
+      </div>
+      <div class="filter-row" id="rep-extra-filtros" style="display:none;">
+      </div>
+      <div id="chart-container">
+        <canvas id="reportCanvas" width="600" height="300"></canvas>
+      </div>
+      <div id="report-resumen" style="margin-top:15px; font-size:0.9rem; color:var(--muted);"></div>
+      <button class="btn outline" style="margin-top:15px;" onclick="descargarPDF()">📄 Descargar este Informe en PDF</button>
+    </div>
+  </div>
+
   <div id="view-ajustes" class="view">
     <div class="report">
+      <h3>⚙️ Configuración General</h3>
+      <p style="font-size:0.85rem; color:var(--muted); margin-top:0;">Tus datos son 100% privados. Se guardan solo en este dispositivo.</p>
+      <button class="btn outline" onclick="migrarDatos()" style="margin-bottom:10px; border-color:#E67A5F; color:#E67A5F;">🔄 Migrar datos de versión anterior</button>
+    </div>
+    
+    <div class="report">
       <h3>🎯 Tu 100% de hoy</h3>
-      <p style="font-size: 0.85rem; color: #888;">Selecciona qué actividades cuentan para el progreso de hoy.</p>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-top:0;">Selecciona qué actividades cuentan para el progreso de hoy.</p>
       <div id="meta-extra" style="margin-bottom:10px;"></div>
       <div class="meta-list" id="meta-selector"></div>
     </div>
+
     <div class="report">
-      <h3>⚙️ Configurar Categorías y Actividades</h3>
+      <h3>🛠️ Editar Categorías y Actividades</h3>
       <div id="config-lista"></div>
     </div>
+
     <div class="report">
-      <h3>💾 Datos</h3>
-      <button class="btn" onclick="exportar()">Exportar Copia</button>
-      <button class="btn red" onclick="borrarTodo()">Borrar todo</button>
+      <h3>💾 Copias de Seguridad</h3>
+      <button class="btn" onclick="exportar()">Exportar Copia (JSON)</button>
+      <button class="btn outline" onclick="document.getElementById('file-import').click()">Importar Copia (JSON)</button>
+      <input type="file" id="file-import" style="display:none" accept=".json" onchange="importar(event)">
+      <button class="btn red" onclick="borrarTodo()">Borrar todos los datos</button>
     </div>
   </div>
 </main>
@@ -88,7 +180,6 @@
 </nav>
 
 <script>
-// Base de datos inicial
 const DEFAULT_DB = {
   "casa": { t: "Casa", e: "🏠", items: [
     {id:"c1", l:"Hacer comida", t:"num", unit:"veces"}, {id:"c2", l:"Barrer", t:"num", unit:"veces"}, 
@@ -97,23 +188,26 @@ const DEFAULT_DB = {
     {id:"c7", l:"Lavavajillas", t:"num", unit:"veces"}, {id:"c8", l:"Hacer la cama", t:"tg"}
   ]},
   "medicacion": { t: "Medicación", e: "💊", items: [
-    {id:"m1", l:"Venlafaxina", t:"num", unit:"past.", mg:"75mg"}, {id:"m2", l:"Arcoxia", t:"num", unit:"past.", mg:"90mg"}, 
-    {id:"m3", l:"Nolotil", t:"num", unit:"cáps", mg:""}, {id:"m4", l:"Paracetamol", t:"num", unit:"past.", mg:"650mg"}, 
-    {id:"m5", l:"Ibuprofeno", t:"num", unit:"past.", mg:"600mg"}, {id:"m6", l:"Diazepam", t:"num", unit:"past.", mg:"5mg"}, 
-    {id:"m7", l:"Prednisona", t:"num", unit:"past.", mg:"30mg"}, {id:"m8", l:"Diclofenaco crema", t:"tg"}, 
+    {id:"m1", l:"Venlafaxina", t:"num", unit:"past.", mg:"75"}, {id:"m2", l:"Arcoxia", t:"num", unit:"past.", mg:"90"}, 
+    {id:"m3", l:"Nolotil", t:"num", unit:"cáps", mg:""}, {id:"m4", l:"Paracetamol", t:"num", unit:"past.", mg:"650"}, 
+    {id:"m5", l:"Ibuprofeno", t:"num", unit:"past.", mg:"600"}, {id:"m6", l:"Diazepam", t:"num", unit:"past.", mg:"5"}, 
+    {id:"m7", l:"Prednisona", t:"num", unit:"past.", mg:"30"}, {id:"m8", l:"Diclofenaco crema", t:"tg"}, 
     {id:"m9", l:"Manta eléctrica", t:"num", unit:"min", step:10}, {id:"m10", l:"TENS", t:"num", unit:"min", step:10}
   ]},
-  "dolor": { t: "Dolor y Emociones (0-10)", e: "💢", items: [
-    {id:"d1", l:"Espalda", t:"sc"}, {id:"d2", l:"Rodillas", t:"sc"}, {id:"d3", l:"Manos", t:"sc"}, 
-    {id:"e1", l:"Ansiedad", t:"sc"}, {id:"e2", l:"Tristeza", t:"sc"}, {id:"e3", l:"Agotamiento", t:"sc"}
+  "dolor": { t: "Dolores Físicos", e: "💢", items: [
+    {id:"d1", l:"Espalda", t:"sc", sub:"text"}, {id:"d2", l:"Rodillas", t:"sc", sub:"text"}, 
+    {id:"d3", l:"Manos", t:"sc", sub:"text"}, {id:"d4", l:"Caderas", t:"sc", sub:"text"}
+  ]},
+  "emociones": { t: "Emociones y Ánimo", e: "🧠", items: [
+    {id:"e1", l:"Ansiedad", t:"sc", sub:"text"}, {id:"e2", l:"Tristeza", t:"sc", sub:"text"}, 
+    {id:"e3", l:"Agotamiento", t:"sc", sub:"text"}, {id:"e5", l:"Alegría", t:"sc", sub:"text"}
   ]},
   "relaciones": { t: "Relaciones", e: "👥", items: [
-    {id:"r1", l:"Hablar con familia", t:"tg", sub:"text"}, {id:"r2", l:"Hablar con amigos", t:"tg", sub:"text"}
+    {id:"r1", l:"Hablar con familia", t:"tg", sub:"text"}
   ]}
 };
 
-// Cargar datos
-let db = JSON.parse(localStorage.getItem('miDiaFlex2') || 'null');
+let db = JSON.parse(localStorage.getItem('miDiaPremium') || 'null');
 if(!db || !db.config) {
   db = { config: DEFAULT_DB, registros: {}, metaHoy: [], metaExtra: "" };
   save();
@@ -122,31 +216,129 @@ if(!db || !db.config) {
 const hoy = new Date().toISOString().slice(0,10);
 if(!db.registros[hoy]) db.registros[hoy] = {};
 
-function save() { localStorage.setItem('miDiaFlex2', JSON.stringify(db)); }
-
-function getVal(id) { return db.registros[hoy][id] ? db.registros[hoy][id].v : null; }
-function getSub(id) { return db.registros[hoy][id] ? db.registros[hoy][id].s : ""; }
-
-function setVal(id, v, s) {
-  if(v === null || v === false || v === "") delete db.registros[hoy][id];
-  else db.registros[hoy][id] = { v: v, s: s !== undefined ? s : getSub(id), t: Date.now() };
-  save(); render();
-}
+function save() { localStorage.setItem('miDiaPremium', JSON.stringify(db)); }
 
 function nav(id, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
   btn.classList.add('active');
-  if(id === 'informes') dibujarGrafico();
+  if(id === 'informes') updateRepFiltros();
   if(id === 'ajustes') renderAjustes();
+}
+
+// --- LÓGICA DE TIEMPO Y CRONÓMETRO ---
+let activeTimer = null;
+let timerInterval = null;
+
+function formatTime(secs) {
+  let h = Math.floor(secs / 3600);
+  let m = Math.floor((secs % 3600) / 60);
+  let s = secs % 60;
+  return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+}
+
+function toggleTimer(id) {
+  let v = getVal(id);
+  let startMs = v ? v.startMs : null;
+  
+  if(activeTimer === id) {
+    // Detener
+    clearInterval(timerInterval);
+    activeTimer = null;
+    let duration = Math.floor((Date.now() - startMs) / 1000);
+    setVal(id, { startMs: startMs, endMs: Date.now(), duration: duration, manual: false });
+  } else {
+    // Iniciar (si ya había uno, lo paramos)
+    if(activeTimer) toggleTimer(activeTimer);
+    activeTimer = id;
+    let newVal = { startMs: Date.now(), endMs: null, duration: 0, manual: false };
+    setVal(id, newVal);
+    timerInterval = setInterval(() => {
+      let el = document.getElementById('timer-display-' + id);
+      if(el) el.textContent = formatTime(Math.floor((Date.now() - startMs) / 1000));
+    }, 1000);
+  }
+}
+
+function openManualTime(id) {
+  let v = getVal(id);
+  document.getElementById('modal-title').textContent = "Apuntar Tiempo Manual";
+  
+  if(v && v.startMs) {
+    let d1 = new Date(v.startMs);
+    let d2 = new Date(v.endMs || Date.now());
+    document.getElementById('inp-start').value = d1.getHours().toString().padStart(2,'0') + ':' + d1.getMinutes().toString().padStart(2,'0');
+    document.getElementById('inp-end').value = d2.getHours().toString().padStart(2,'0') + ':' + d2.getMinutes().toString().padStart(2,'0');
+  } else {
+    document.getElementById('inp-start').value = "";
+    document.getElementById('inp-end').value = "";
+  }
+  
+  document.getElementById('timeModal').classList.add('active');
+  document.getElementById('timeModal').dataset.id = id;
+}
+
+function closeModal() {
+  document.getElementById('timeModal').classList.remove('active');
+}
+
+function saveManualTime() {
+  let id = document.getElementById('timeModal').dataset.id;
+  let start = document.getElementById('inp-start').value;
+  let end = document.getElementById('inp-end').value;
+  
+  if(!start || !end) { alert("Por favor, rellena ambas horas."); return; }
+  
+  let today = new Date();
+  let [h1, m1] = start.split(':').map(Number);
+  let [h2, m2] = end.split(':').map(Number);
+  
+  let d1 = new Date(today.getFullYear(), today.getMonth(), today.getDate(), h1, m1);
+  let d2 = new Date(today.getFullYear(), today.getMonth(), today.getDate(), h2, m2);
+  
+  if(d2 < d1) d2.setDate(d2.getDate() + 1); // Por si acaba al día siguiente
+  
+  let duration = Math.floor((d2.getTime() - d1.getTime()) / 1000);
+  setVal(id, { startMs: d1.getTime(), endMs: d2.getTime(), duration: duration, manual: true });
+  closeModal();
+}
+
+// --- RESTO DE LA LÓGICA ---
+function getVal(id) { return db.registros[hoy] && db.registros[hoy][id] ? db.registros[hoy][id].v : null; }
+function getSub(id) { return db.registros[hoy] && db.registros[hoy][id] ? db.registros[hoy][id].s : ""; }
+
+function setVal(id, v, s) {
+  if(!db.registros[hoy]) db.registros[hoy] = {};
+  if(v === null || v === false || v === "") delete db.registros[hoy][id];
+  else db.registros[hoy][id] = { v: v, s: s !== undefined ? s : getSub(id), t: Date.now() };
+  save(); render();
+}
+
+function toggleAcordeon(id) {
+  let el = document.getElementById('cat-' + id);
+  if(el) {
+    el.classList.toggle('open');
+    let isOpen = el.classList.contains('open');
+    localStorage.setItem('acordeon_' + id, isOpen ? '1' : '0');
+  }
 }
 
 function render() {
   let html = '';
+  let first = true;
   Object.keys(db.config).forEach(k => {
     let cat = db.config[k];
-    html += `<div class="section"><h2>${cat.e} ${cat.t}</h2><div class="card">`;
+    let isOpen = localStorage.getItem('acordeon_' + k) === '1' || (first && localStorage.getItem('acordeon_' + k) === null);
+    if(first) first = false;
+    
+    html += `<div class="category-group ${isOpen ? 'open' : ''}" id="cat-${k}">
+      <div class="category-header" onclick="toggleAcordeon('${k}')">
+        <span>${cat.e || '📌'} ${cat.t}</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="category-content">`;
+      
     cat.items.forEach(item => {
       let v = getVal(item.id);
       let s = getSub(item.id);
@@ -164,7 +356,7 @@ function render() {
         let val = v || 0;
         let step = item.step || 1;
         let unitText = `${val} ${item.unit || ""}`;
-        if(item.mg && val > 0) unitText += ` (${val * parseInt(item.mg)}mg)`;
+        if(item.mg && val > 0) unitText = `${val} ${item.unit} (${val * parseInt(item.mg)}mg)`;
         
         html += `<div class="stepper">
           <button onclick="setVal('${item.id}', Math.max(0, ${val} - ${step}), '${s}')">−</button>
@@ -172,13 +364,30 @@ function render() {
           <button onclick="setVal('${item.id}', ${val + step}, '${s}')">+</button>
         </div>`;
       }
+
+      if(item.t === "time") {
+        let timerHtml = `<div class="timer-controls">`;
+        if(!v) {
+          timerHtml += `<button class="timer-btn start" onclick="toggleTimer('${item.id}')">▶ Iniciar</button>`;
+        } else {
+          let isRunning = activeTimer === item.id;
+          let display = isRunning ? formatTime(Math.floor((Date.now() - v.startMs)/1000)) : formatTime(v.duration);
+          if(isRunning) {
+            timerHtml += `<button class="timer-btn stop" onclick="toggleTimer('${item.id}')">⏹ Parar</button>`;
+          } else {
+             timerHtml += `<button class="timer-btn start" style="background:var(--blue)" onclick="toggleTimer('${item.id}')">▶ Volver a iniciar</button>`;
+          }
+          timerHtml += `<div class="timer-display" id="timer-display-${item.id}" onclick="openManualTime('${item.id}')">${display} ✎</div>`;
+        }
+        timerHtml += `</div>`;
+        html += timerHtml;
+      }
       
       html += `</div>`;
       
       if(item.sub === "text" && v) {
-        html += `<input type="text" class="input-text" placeholder="Escribe aquí..." value="${s}" onchange="setVal('${item.id}', ${v}, this.value)">`;
+        html += `<input type="text" class="input-text" placeholder="Añadir nota o detalle..." value="${s}" onchange="setVal('${item.id}', ${v}, this.value)">`;
       }
-      
       html += `</div>`;
     });
     html += `</div></div>`;
@@ -187,19 +396,21 @@ function render() {
   calcularProgreso();
 }
 
+// ... (El resto de funciones de progreso, informes, config, etc. se mantienen igual)
 function calcularProgreso() {
   let total = 0, hechos = 0;
   let meta = db.metaHoy || [];
-  // El progreso se calcula sobre la meta elegida. Si no hay meta, sobre TODAS las de tipo Toggle
   let itemsToCount = [];
-  
   if(meta.length > 0) {
     meta.forEach(id => { let it = findItem(id); if(it) itemsToCount.push(it); });
   } else {
     Object.values(db.config).forEach(cat => cat.items.forEach(i => { if(i.t === 'tg') itemsToCount.push(i); }));
   }
-
-  itemsToCount.forEach(i => { total++; if(getVal(i.id)) hechos++; });
+  itemsToCount.forEach(i => { 
+    total++; 
+    let val = getVal(i.id);
+    if(val && val !== 0) hechos++; 
+  });
   let pct = total === 0 ? 0 : Math.round((hechos/total)*100);
   document.getElementById('pct').textContent = pct + '%';
 }
@@ -212,13 +423,181 @@ function findItem(id) {
   return null;
 }
 
+function updateRepFiltros() {
+  let tipo = document.getElementById('rep-tipo').value;
+  let div = document.getElementById('rep-extra-filtros');
+  if(tipo === 'cat') {
+    let opts = '';
+    Object.keys(db.config).forEach(k => opts += `<option value="${k}">${db.config[k].t}</option>`);
+    div.innerHTML = `<select id="rep-cat-id" onchange="generarInforme()">${opts}</select>`;
+    div.style.display = 'flex';
+  } else if(tipo === 'item') {
+    let opts = '';
+    Object.keys(db.config).forEach(k => {
+      db.config[k].items.forEach(i => opts += `<option value="${i.id}">${db.config[k].t} → ${i.l}</option>`);
+    });
+    div.innerHTML = `<select id="rep-item-id" onchange="generarInforme()">${opts}</select>`;
+    div.style.display = 'flex';
+  } else {
+    div.style.display = 'none';
+  }
+  generarInforme();
+}
+
+function getFechasRango() {
+  let rango = parseInt(document.getElementById('rep-tiempo').value);
+  let fechas = [];
+  let hoyD = new Date();
+  if(document.getElementById('rep-tiempo').value === 'mes_act') {
+    let y = hoyD.getFullYear(), m = hoyD.getMonth();
+    let daysInMonth = new Date(y, m+1, 0).getDate();
+    for(let i=1; i<=daysInMonth; i++) {
+      let d = new Date(y, m, i);
+      if(d <= hoyD) fechas.push(d.toISOString().slice(0,10));
+    }
+  } else {
+    for(let i=rango-1; i>=0; i--) {
+      let d = new Date(); d.setDate(hoyD.getDate() - i);
+      fechas.push(d.toISOString().slice(0,10));
+    }
+  }
+  return fechas;
+}
+
+function generarInforme() {
+  let tipo = document.getElementById('rep-tipo').value;
+  let fechas = getFechasRango();
+  let canvas = document.getElementById('reportCanvas');
+  let ctx = canvas.getContext('2d');
+  let resumenTxt = document.getElementById('report-resumen');
+  
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card').trim() || '#fff';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  let pad = 40, w = canvas.width, h = canvas.height;
+  ctx.strokeStyle = "#ddd"; ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
+
+  if(tipo === 'cat') {
+    let catId = document.getElementById('rep-cat-id').value;
+    if(!catId) return;
+    let cat = db.config[catId];
+    let totalItems = cat.items.length;
+    let values = fechas.map(f => {
+      let count = 0;
+      if(db.registros[f]) {
+        cat.items.forEach(i => { if(db.registros[f][i.id] && db.registros[f][i.id].v) count++; });
+      }
+      return (count/totalItems)*100;
+    });
+    dibujarLineas(ctx, fechas, values, w, h, pad, 0, 100);
+    resumenTxt.innerHTML = `Categoría: <b>${cat.t}</b><br>Muestra el porcentaje de actividades realizadas.`;
+  } else if(tipo === 'item') {
+    let itemId = document.getElementById('rep-item-id').value;
+    if(!itemId) return;
+    let item = findItem(itemId);
+    let values = fechas.map(f => {
+      let v = db.registros[f] && db.registros[f][itemId] ? db.registros[f][itemId].v : 0;
+      if(typeof v === 'object' && v.duration) return Math.floor(v.duration/60); // en minutos
+      return typeof v === 'number' ? v : (v ? 1 : 0);
+    });
+    let max = Math.max(...values, 1);
+    dibujarLineas(ctx, fechas, values, w, h, pad, 0, max);
+    let unit = item.t === 'time' ? 'minutos' : (item.unit || 'veces');
+    resumenTxt.innerHTML = `Actividad: <b>${item.l}</b><br>Cantidad (${unit}) registrada por día.`;
+  } else {
+    let pcts = fechas.map(f => {
+      if(!db.registros[f]) return 0;
+      let keys = Object.keys(db.registros[f]);
+      return keys.filter(k => db.registros[f][k].v).length * 10;
+    });
+    dibujarBarras(ctx, fechas, pcts, w, h, pad);
+    resumenTxt.innerHTML = `Muestra el volumen total de registros diarios.`;
+  }
+}
+
+function dibujarLineas(ctx, labels, values, w, h, pad, min, max) {
+  let stepX = (w - pad*2) / (labels.length-1 || 1);
+  ctx.beginPath(); ctx.strokeStyle = "#8A7BB8"; ctx.lineWidth = 3;
+  values.forEach((v, i) => {
+    let x = pad + i*stepX;
+    let y = (h-pad) - ((v-min)/(max-min||1)) * (h-pad*2);
+    if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+  });
+  ctx.stroke();
+  values.forEach((v, i) => {
+    let x = pad + i*stepX;
+    let y = (h-pad) - ((v-min)/(max-min||1)) * (h-pad*2);
+    ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle = "#8A7BB8"; ctx.fill();
+    if(i % Math.ceil(labels.length/5) === 0 || i === labels.length-1) {
+      ctx.fillStyle = "#888"; ctx.font = "10px sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(labels[i].slice(5), x, h-pad+15);
+    }
+  });
+}
+
+function dibujarBarras(ctx, labels, values, w, h, pad) {
+  let barW = (w - pad*2) / labels.length;
+  let max = Math.max(...values, 1);
+  values.forEach((v, i) => {
+    let bh = (v/max) * (h-pad*2);
+    ctx.fillStyle = "#5B9BD5";
+    ctx.fillRect(pad + i*barW + 2, h-pad-bh, barW-4, bh);
+    if(i % Math.ceil(labels.length/5) === 0 || i === labels.length-1) {
+      ctx.fillStyle = "#888"; ctx.font = "10px sans-serif"; ctx.textAlign = "center";
+      ctx.fillText(labels[i].slice(5), pad + i*barW + barW/2, h-pad+15);
+    }
+  });
+}
+
+function descargarPDF() {
+  if(typeof html2pdf === 'undefined') { alert("Cargando librería PDF... Espera 3 segundos."); return; }
+  let loading = document.getElementById('pdf-loading');
+  loading.style.display = 'flex';
+  let element = document.querySelector('#view-informes .report');
+  let opt = { margin: 10, filename: 'Informe_' + hoy + '.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
+  let clone = element.cloneNode(true);
+  clone.querySelectorAll('.btn').forEach(b => b.remove());
+  clone.querySelectorAll('select').forEach(s => s.style.display = 'none');
+  clone.style.boxShadow = 'none'; clone.style.border = 'none';
+  html2pdf().set(opt).from(clone).save().then(() => { loading.style.display = 'none'; });
+}
+
+function migrarDatos() {
+  let old = localStorage.getItem('miDiaFlex2');
+  if(!old) { alert("No se encontraron datos de la versión anterior."); return; }
+  if(!confirm("Esto combinará tus datos anteriores con la nueva versión. ¿Continuar?")) return;
+  try {
+    let oldDb = JSON.parse(old);
+    let newConfig = { ...db.config };
+    let oldDolor = null;
+    Object.keys(oldDb.config).forEach(k => { if(oldDb.config[k].t.toLowerCase().includes("dolor")) oldDolor = oldDb.config[k]; });
+    if(oldDolor) {
+      let fisicos = [], emociones = [];
+      const emoL = ["ansiedad","tristeza","agotamiento","fatiga","nervios","desánimo","irritab","alegr","entusias","rabia","frustra","desesper","culpa","vergüen","enojo","envidia","esperan","gratitud","decepci","orgullo","amor","pasión","desprecio","celos","compasi","miedo","asco"];
+      oldDolor.items.forEach(i => {
+        let isEmo = emoL.some(e => i.l.toLowerCase().includes(e));
+        if(isEmo) emociones.push(i); else fisicos.push(i);
+      });
+      newConfig["dolor"]["items"] = fisicos;
+      newConfig["emociones"]["items"] = [...newConfig["emociones"]["items"], ...emociones];
+    }
+    db.config = newConfig;
+    if(oldDb.registros) {
+      Object.keys(oldDb.registros).forEach(f => {
+        if(!db.registros[f]) db.registros[f] = {};
+        Object.assign(db.registros[f], oldDb.registros[f]);
+      });
+    }
+    save(); alert("¡Datos migrados con éxito!"); location.reload();
+  } catch(e) { alert("Error al migrar datos."); }
+}
+
 function renderAjustes() {
-  // Meta Extra
   let extraHtml = `<label style="font-size:0.85rem; font-weight:bold;">Meta extra (solo hoy):</label>
   <input type="text" class="input-text" placeholder="Ej: Ir al médico" value="${db.metaExtra||''}" onchange="db.metaExtra=this.value; save();">`;
   document.getElementById('meta-extra').innerHTML = extraHtml;
 
-  // Selector de meta (TODOS los items de todas las categorias)
   let metaHtml = '';
   Object.keys(db.config).forEach(k => {
     let cat = db.config[k];
@@ -232,24 +611,23 @@ function renderAjustes() {
   });
   document.getElementById('meta-selector').innerHTML = metaHtml;
 
-  // Configuración
   let configHtml = '';
   Object.keys(db.config).forEach(k => {
     let cat = db.config[k];
-    configHtml += `<div style="margin-bottom:15px; border:1px solid var(--line); padding:10px; border-radius:8px;">`;
+    configHtml += `<div style="margin-bottom:15px; border:1px solid var(--line); padding:10px; border-radius:8px; background:var(--bg);">`;
     configHtml += `<div class="config-item"><input type="text" value="${cat.t}" onchange="renameCat('${k}', this.value)"><button class="del-btn" onclick="delCat('${k}')">Borrar Cat</button></div>`;
-    
     cat.items.forEach(item => {
       configHtml += `<div class="config-item">
         <input type="text" value="${item.l}" onchange="editItem('${k}','${item.id}', 'l', this.value)">
         <select onchange="editItem('${k}','${item.id}', 't', this.value)">
-          <option value="tg" ${item.t==='tg'?'selected':''}>Sí/No (Toggle)</option>
-          <option value="num" ${item.t==='num'?'selected':''}>Números/Cantidad</option>
+          <option value="tg" ${item.t==='tg'?'selected':''}>Sí/No</option>
+          <option value="num" ${item.t==='num'?'selected':''}>Cantidad</option>
           <option value="sc" ${item.t==='sc'?'selected':''}>Escala 0-10</option>
+          <option value="time" ${item.t==='time'?'selected':''}>Tiempo</option>
         </select>
         <select onchange="editItem('${k}','${item.id}', 'sub', this.value)">
-          <option value="" ${item.sub!=='text'?'selected':''}>Sin texto extra</option>
-          <option value="text" ${item.sub==='text'?'selected':''}>Con hueco para texto</option>
+          <option value="" ${item.sub!=='text'?'selected':''}>Sin texto</option>
+          <option value="text" ${item.sub==='text'?'selected':''}>Con texto</option>
         </select>
         <button class="del-btn" onclick="delItem('${k}','${item.id}')">X</button>
       </div>`;
@@ -278,53 +656,30 @@ function editItem(k, id, field, val) {
 function delItem(k, id) { if(confirm('¿Borrar actividad?')) { db.config[k].items = db.config[k].items.filter(i => i.id !== id); save(); render(); renderAjustes(); } }
 function addItem(k) {
   let name = prompt("Nombre de la nueva actividad:");
-  if(name) {
-    db.config[k].items.push({ id: 'i' + Date.now(), l: name, t: 'tg', sub: '' });
-    save(); render(); renderAjustes();
-  }
+  if(name) { db.config[k].items.push({ id: 'i' + Date.now(), l: name, t: 'tg', sub: '' }); save(); render(); renderAjustes(); }
 }
 function addCat() {
   let name = prompt("Nombre de la nueva categoría:");
-  if(name) {
-    db.config['c' + Date.now()] = { t: name, e: "📌", items: [] };
-    save(); render(); renderAjustes();
-  }
+  if(name) { db.config['c' + Date.now()] = { t: name, e: "📌", items: [] }; save(); render(); renderAjustes(); }
 }
-
-function dibujarGrafico() {
-  let c = document.getElementById('reportes');
-  let fechas = Object.keys(db.registros).sort().slice(-7);
-  if(fechas.length < 2) { c.innerHTML = '<div class="report">Necesitas al menos 2 días de datos para ver el gráfico.</div>'; return; }
-
-  let html = `<div class="report"><h3>📈 Evolución Dolor (Últimos 7 días)</h3><canvas id="cv" width="400" height="200"></canvas></div>`;
-  c.innerHTML = html;
-  
-  let ctx = document.getElementById('cv').getContext('2d');
-  let w = 400, h = 200, pad = 20;
-  ctx.clearRect(0,0,w,h);
-  ctx.strokeStyle = "#ddd"; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.stroke();
-  
-  let dolencias = [{id:'d1', color:'#e07a5f', n:'Espalda'}, {id:'e1', color:'#7c6bb0', n:'Ansiedad'}];
-  dolencias.forEach(d => {
-    ctx.beginPath(); ctx.strokeStyle = d.color; ctx.lineWidth = 3;
-    fechas.forEach((f, i) => {
-      let v = db.registros[f][d.id] ? db.registros[f][d.id].v : 0;
-      let x = pad + (i * ((w-pad*2)/(fechas.length-1)));
-      let y = (h-pad) - ((v/10) * (h-pad*2));
-      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
-    });
-    ctx.stroke();
-  });
-}
-
 function exportar() {
   let a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(db)], {type:'application/json'}));
-  a.download = 'midia_flex_backup.json'; a.click();
+  a.download = 'mi_dia_premium.json'; a.click();
 }
-
+function importar(e) {
+  let file = e.target.files[0]; if(!file) return;
+  let reader = new FileReader();
+  reader.onload = function(evt) {
+    try {
+      let imported = JSON.parse(evt.target.result);
+      if(imported.config && imported.registros) { db = imported; save(); alert("Copia importada."); location.reload(); }
+    } catch(err) { alert("Error al leer archivo."); }
+  };
+  reader.readAsText(file);
+}
 function borrarTodo() {
-  if(confirm("¿Borrar todos los datos y configuración?")) { db = { config: DEFAULT_DB, registros: {}, metaHoy: [], metaExtra: "" }; save(); location.reload(); }
+  if(confirm("¿Borrar todos los datos?")) { localStorage.removeItem('miDiaPremium'); location.reload(); }
 }
 
 render();
