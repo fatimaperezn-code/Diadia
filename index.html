@@ -4,15 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#7c6bb0">
-<title>Mi Día</title>
+<title>Mi Día Flexible</title>
 <style>
-  :root { --bg: #f7f4fc; --card: #ffffff; --primary: #7c6bb0; --text: #2d2a3e; --line: #e6e1f0; --ok: #4caf7a; --warn: #e07a5f; }
+  :root { --bg: #f7f4fc; --card: #ffffff; --primary: #7c6bb0; --text: #2d2a3e; --line: #e6e1f0; --ok: #4caf7a; --warn: #e07a5f; --blue: #4a90e2; }
   @media (prefers-color-scheme: dark) { :root { --bg: #1a1725; --card: #2a2438; --text: #f0ecf9; --line: #3a3350; } }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: system-ui, sans-serif; }
   body { margin: 0; background: var(--bg); color: var(--text); padding-bottom: 80px; }
   header { position: sticky; top: 0; z-index: 10; background: linear-gradient(135deg, #7c6bb0, #a08dd4); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 15px 15px; }
-  header h1 { margin: 0; font-size: 1.2rem; }
-  #pct { font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; }
+  header h1 { margin: 0; font-size: 1.1rem; }
+  #pct { font-weight: bold; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 0.9rem; }
   main { padding: 15px; max-width: 600px; margin: 0 auto; }
   .view { display: none; }
   .view.active { display: block; animation: fadeIn 0.3s; }
@@ -24,7 +24,7 @@
   .item:last-child { border-bottom: none; }
   .item-top { display: flex; justify-content: space-between; align-items: center; }
   .label { font-size: 0.95rem; font-weight: 500; flex: 1; }
-  .toggle { width: 50px; height: 28px; border-radius: 14px; background: #ccc; position: relative; cursor: pointer; transition: 0.2s; }
+  .toggle { width: 50px; height: 28px; border-radius: 14px; background: #ccc; position: relative; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
   .toggle.on { background: var(--ok); }
   .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 22px; height: 22px; background: white; border-radius: 50%; transition: 0.2s; }
   .toggle.on::after { left: 25px; }
@@ -33,37 +33,46 @@
   .scale button.on { background: var(--primary); color: white; border-color: var(--primary); }
   .stepper { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
   .stepper button { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); font-size: 1.2rem; cursor: pointer; color: var(--text); }
-  .stepper span { font-weight: bold; }
-  .chips { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-  .chip { padding: 5px 10px; border: 1px solid var(--line); border-radius: 15px; font-size: 0.8rem; background: var(--bg); cursor: pointer; color: var(--text); }
-  .chip.on { background: var(--primary); color: white; border-color: var(--primary); }
-  .meta-row { display: flex; align-items: center; gap: 5px; margin-top: 10px; font-size: 0.75rem; color: #888; flex-wrap: wrap; }
-  .meta-row .scale button { height: 22px; font-size: 0.65rem; }
+  .stepper span { font-weight: bold; min-width: 40px; text-align: center; }
+  .input-text { width: 100%; padding: 8px; margin-top: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
   nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; border-top: 1px solid var(--line); z-index: 10; padding-bottom: env(safe-area-inset-bottom); }
   nav button { flex: 1; background: none; border: none; padding: 10px 0; color: #888; cursor: pointer; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; }
   nav button.active { color: var(--primary); font-weight: bold; }
   nav button span { font-size: 1.3rem; }
   .btn { background: var(--primary); color: white; border: none; padding: 12px; border-radius: 10px; width: 100%; font-size: 0.9rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
   .btn.red { background: var(--warn); }
-  canvas { max-width: 100%; height: auto; margin-top: 10px; }
+  .btn.blue { background: var(--blue); }
   .report { background: var(--card); padding: 15px; border-radius: 12px; margin-bottom: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
   .report h3 { margin: 0 0 10px; font-size: 1rem; color: var(--primary); }
+  .config-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .config-item input { flex: 1; padding: 5px; margin-right: 10px; border: 1px solid var(--line); border-radius: 5px; background: var(--bg); color: var(--text); }
+  .del-btn { background: #ffcccc; color: #cc0000; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; font-size: 0.8rem; }
+  .add-btn { background: #e6f7e6; color: #2e7d32; border: none; padding: 8px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: bold; }
+  canvas { max-width: 100%; height: auto; margin-top: 10px; }
 </style>
 </head>
 <body>
 <header>
-  <h1>🌸 Mi Día</h1>
+  <h1>🌸 Mi Día Flexible</h1>
   <div id="pct">0%</div>
 </header>
 
 <main>
   <div id="view-hoy" class="view active"></div>
-  <div id="view-esporadicas" class="view"></div>
   <div id="view-informes" class="view"><div id="reportes"></div></div>
   <div id="view-ajustes" class="view">
     <div class="report">
+      <h3>🎯 Tu 100% de hoy</h3>
+      <p style="font-size: 0.85rem; color: #888;">Marca las actividades que quieres que cuenten para el progreso de hoy. Si no marcas ninguna, el progreso se calculará sobre todas las actividades de la pestaña "Hoy".</p>
+      <div id="meta-selector"></div>
+    </div>
+    <div class="report">
+      <h3>⚙️ Configurar Categorías y Actividades</h3>
+      <div id="config-lista"></div>
+    </div>
+    <div class="report">
       <h3>💾 Datos</h3>
-      <button class="btn" onclick="exportar()">Exportar Copia de Seguridad</button>
+      <button class="btn" onclick="exportar()">Exportar Copia</button>
       <button class="btn red" onclick="borrarTodo()">Borrar todo</button>
     </div>
   </div>
@@ -71,117 +80,200 @@
 
 <nav>
   <button class="active" onclick="nav('hoy',this)"><span>☀️</span>Hoy</button>
-  <button onclick="nav('esporadicas',this)"><span>🧹</span>Esporád.</button>
   <button onclick="nav('informes',this)"><span>📊</span>Informes</button>
   <button onclick="nav('ajustes',this)"><span>⚙️</span>Ajustes</button>
 </nav>
 
 <script>
-const CAT = {
-  "casa-diaria": { t: "Casa (Diario)", e: "🏠", hoy: true, items: [
-    {id:"c1", l:"Hacer comida", t:"tg"}, {id:"c2", l:"Barrer", t:"tg"}, {id:"c3", l:"Lavadora", t:"tg"}, {id:"c4", l:"Tender", t:"tg"},
-    {id:"c5", l:"Recoger ropa", t:"tg"}, {id:"c6", l:"Limpiar baño", t:"tg"}, {id:"c7", l:"Quitar polvo", t:"tg"}, {id:"c8", l:"Lavavajillas", t:"tg"},
-    {id:"c9", l:"Hacer la cama", t:"tg"}, {id:"c10", l:"Ordenar habitación", t:"tg"}, {id:"c11", l:"Colocar ropa", t:"tg"}
+// Base de datos inicial (si no hay nada guardado)
+const DEFAULT_DB = {
+  "casa": { t: "Casa", e: "🏠", items: [
+    {id:"c1", l:"Hacer comida", t:"tg"}, {id:"c2", l:"Barrer", t:"num", unit:"veces"}, {id:"c3", l:"Lavadora", t:"num", unit:"veces"}, 
+    {id:"c4", l:"Tender", t:"tg"}, {id:"c5", l:"Recoger ropa", t:"tg"}, {id:"c6", l:"Limpiar baño", t:"tg"}, 
+    {id:"c7", l:"Lavavajillas", t:"tg"}, {id:"c8", l:"Hacer la cama", t:"tg"}
   ]},
-  "medicacion": { t: "Medicación y Remedios", e: "💊", hoy: true, items: [
-    {id:"m1", l:"Venlafaxina", t:"tg"}, {id:"m2", l:"Arcoxia", t:"tg"}, {id:"m3", l:"Nolotil", t:"tg"}, {id:"m4", l:"Voltarén", t:"tg"},
-    {id:"m5", l:"Prednisona", t:"tg"}, {id:"m6", l:"Diazepam", t:"tg"}, {id:"m7", l:"Paracetamol", t:"tg"}, {id:"m8", l:"Ibuprofeno", t:"tg"},
-    {id:"m9", l:"Diclofenaco crema", t:"tg"}, {id:"m10", l:"Parafina baño", t:"tg"}, {id:"m11", l:"Manta eléctrica", t:"tg"}, {id:"m12", l:"TENS", t:"tg"},
-    {id:"m13", l:"Muñequeras", t:"tg"}
+  "medicacion": { t: "Medicación", e: "💊", items: [
+    {id:"m1", l:"Venlafaxina", t:"num", unit:"mg"}, {id:"m2", l:"Arcoxia", t:"num", unit:"mg"}, {id:"m3", l:"Nolotil", t:"num", unit:"cáps"}, 
+    {id:"m4", l:"Paracetamol", t:"num", unit:"mg"}, {id:"m5", l:"Ibuprofeno", t:"num", unit:"mg"}, {id:"m6", l:"Diazepam", t:"num", unit:"mg"}, 
+    {id:"m7", l:"Prednisona", t:"num", unit:"mg"}, {id:"m8", l:"Diclofenaco crema", t:"tg"}, {id:"m9", l:"Manta eléctrica", t:"num", unit:"min"}, 
+    {id:"m10", l:"TENS", t:"num", unit:"min"}
   ]},
-  "movimiento": { t: "Movimiento", e: "🚶", hoy: true, items: [
-    {id:"p1", l:"Pasos del día", t:"st", step:500},
-    {id:"p2", l:"Pasear perra corto", t:"tg"}, {id:"p3", l:"Pasear perra largo", t:"tg"},
-    {id:"p4", l:"Piscina", t:"tg"}, {id:"p5", l:"Bicicleta", t:"tg"}, {id:"p6", l:"Fuerza", t:"tg"}, {id:"p7", l:"Taichí", t:"tg"}
+  "dolor": { t: "Dolor y Emociones (0-10)", e: "💢", items: [
+    {id:"d1", l:"Espalda", t:"sc"}, {id:"d2", l:"Rodillas", t:"sc"}, {id:"d3", l:"Manos", t:"sc"}, 
+    {id:"e1", l:"Ansiedad", t:"sc"}, {id:"e2", l:"Tristeza", t:"sc"}, {id:"e3", l:"Agotamiento", t:"sc"}, {id:"e4", l:"Irritabilidad", t:"sc"}
   ]},
-  "atencion": { t: "Atención Plena", e: "🧘", hoy: true, items: [
-    {id:"a1", l:"Meditación dormir", t:"tg"}, {id:"a2", l:"Meditación despierta", t:"tg"}, {id:"a3", l:"Hipnosis", t:"tg"},
-    {id:"a4", l:"Respiración", t:"tg"}, {id:"a5", l:"Observar y callar", t:"tg"}, {id:"a6", l:"Péndulo", t:"tg"}
-  ]},
-  "dolor": { t: "Dolor y Emociones (0-10)", e: "💢", hoy: true, items: [
-    {id:"d1", l:"Espalda", t:"sc"}, {id:"d2", l:"Rodillas", t:"sc"}, {id:"d3", l:"Manos", t:"sc"}, {id:"d4", l:"Caderas", t:"sc"},
-    {id:"d5", l:"Cabeza", t:"sc"}, {id:"d6", l:"Estómago", t:"sc"},
-    {id:"e1", l:"Ansiedad", t:"sc"}, {id:"e2", l:"Tristeza", t:"sc"}, {id:"e3", l:"Agotamiento", t:"sc"}, {id:"e4", l:"Irritabilidad", t:"sc"},
-    {id:"e5", l:"Apatía", t:"sc"}, {id:"e6", l:"Soledad", t:"sc"}
-  ]},
-  "cuidado": { t: "Cuidado Personal", e: "💅", hoy: true, items: [
-    {id:"cp1", l:"Ducha", t:"tg"}, {id:"cp2", l:"Skincare", t:"tg"}, {id:"cp3", l:"Hidratación", t:"tg"}, {id:"cp4", l:"Peluquería", t:"tg"}
-  ]},
-  "relaciones": { t: "Relaciones", e: "👥", hoy: false, items: [
-    {id:"r1", l:"Hablar familia", t:"tg"}, {id:"r2", l:"Hablar amigos", t:"tg"}, {id:"r3", l:"Ver series", t:"tg"}, {id:"r4", l:"Juegos móvil", t:"tg"}
-  ]},
-  "esporadicas": { t: "Tareas Esporádicas", e: "🧹", hoy: false, items: [
-    {id:"es1", l:"Limpiar cristales", t:"tg"}, {id:"es2", l:"Limpiar persianas", t:"tg"}, {id:"es3", l:"Ordenar armarios", t:"tg"}, {id:"es4", l:"Limpiar azulejos", t:"tg"}
-  ]},
-  "gestion": { t: "Gestiones y Médicos", e: "📋", hoy: false, items: [
-    {id:"g1", l:"Citas médicas", t:"tg"}, {id:"g2", l:"Bancos", t:"tg"}, {id:"g3", l:"Seguros", t:"tg"}, {id:"g4", l:"Farmacia", t:"tg"}
+  "relaciones": { t: "Relaciones", e: "👥", items: [
+    {id:"r1", l:"Hablar con familia", t:"tg", sub:"text"}, {id:"r2", l:"Hablar con amigos", t:"tg", sub:"text"}, 
+    {id:"r3", l:"Actividades en familia", t:"tg", sub:"text"}
   ]}
 };
 
-let db = JSON.parse(localStorage.getItem('miDiaApp') || '{}');
+// Cargar datos
+let db = JSON.parse(localStorage.getItem('miDiaFlex') || 'null');
+if(!db || !db.config) {
+  db = { config: DEFAULT_DB, registros: {}, metaHoy: [] };
+  save();
+}
+
 const hoy = new Date().toISOString().slice(0,10);
-if(!db[hoy]) db[hoy] = {};
+if(!db.registros[hoy]) db.registros[hoy] = {};
 
-function save() { localStorage.setItem('miDiaApp', JSON.stringify(db)); }
-function val(id) { return db[hoy][id] ? db[hoy][id].v : null; }
-function sat(id) { return db[hoy][id] ? db[hoy][id].s : null; }
+function save() { localStorage.setItem('miDiaFlex', JSON.stringify(db)); }
 
-function set(id, v, s) {
-  if(v === null || v === false || v === "") delete db[hoy][id];
-  else db[hoy][id] = { v: v, s: s !== undefined ? s : (sat(id)||null), t: Date.now() };
+// Obtener valor y subvalor
+function getVal(id) { return db.registros[hoy][id] ? db.registros[hoy][id].v : null; }
+function getSub(id) { return db.registros[hoy][id] ? db.registros[hoy][id].s : ""; }
+
+// Guardar valor
+function setVal(id, v, s) {
+  if(v === null || v === false || v === "") delete db.registros[hoy][id];
+  else db.registros[hoy][id] = { v: v, s: s !== undefined ? s : getSub(id), t: Date.now() };
   save(); render();
 }
 
+// Navegación
 function nav(id, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
   btn.classList.add('active');
   if(id === 'informes') dibujarGrafico();
+  if(id === 'ajustes') renderAjustes();
 }
 
+// Renderizar vista principal
 function render() {
-  ['hoy', 'esporadicas'].forEach(vista => {
-    let html = '';
-    Object.keys(CAT).forEach(k => {
-      if((vista === 'hoy' && CAT[k].hoy) || (vista === 'esporadicas' && !CAT[k].hoy)) {
-        html += `<div class="section"><h2>${CAT[k].e} ${CAT[k].t}</h2><div class="card">`;
-        CAT[k].items.forEach(item => {
-          let v = val(item.id);
-          let s = sat(item.id);
-          html += `<div class="item"><div class="item-top"><div class="label">${item.l}</div>`;
-          
-          if(item.t === "tg") html += `<div class="toggle ${v?'on':''}" onclick="set('${item.id}', ${!v})"></div>`;
-          if(item.t === "st") html += `<div class="stepper"><button onclick="set('${item.id}', Math.max(0, (${v||0})-${item.step}))">−</button><span>${v||0}</span><button onclick="set('${item.id}', (${v||0})+${item.step})">+</button></div>`;
-          if(item.t === "sc") {
-            html += `<div class="scale">`;
-            for(let i=0; i<=10; i++) html += `<button class="${v===i?'on':''}" onclick="set('${item.id}', ${v===i?'null':i})">${i}</button>`;
-            html += `</div>`;
-          }
-          html += `</div>`;
-          
-          if(v && item.t !== "sc") {
-            html += `<div class="meta-row">Satisfacción: <div class="scale">`;
-            for(let i=0; i<=10; i++) html += `<button class="${s===i?'on':''}" onclick="set('${item.id}', ${v}, ${s===i?'null':i})">${i}</button>`;
-            html += `</div></div>`;
-          }
-          html += `</div>`;
-        });
-        html += `</div></div>`;
+  let html = '';
+  Object.keys(db.config).forEach(k => {
+    let cat = db.config[k];
+    html += `<div class="section"><h2>${cat.e} ${cat.t}</h2><div class="card">`;
+    cat.items.forEach(item => {
+      let v = getVal(item.id);
+      let s = getSub(item.id);
+      html += `<div class="item"><div class="item-top"><div class="label">${item.l}</div>`;
+      
+      if(item.t === "tg") html += `<div class="toggle ${v?'on':''}" onclick="setVal('${item.id}', ${!v})"></div>`;
+      
+      if(item.t === "sc") {
+        html += `<div class="scale">`;
+        for(let i=0; i<=10; i++) html += `<button class="${v===i?'on':''}" onclick="setVal('${item.id}', ${v===i?'null':i})">${i}</button>`;
+        html += `</div>`;
+      }
+      
+      if(item.t === "num") {
+        let val = v || 0;
+        let unit = item.unit || "";
+        html += `<div class="stepper">
+          <button onclick="setVal('${item.id}', Math.max(0, ${val} - (('${unit}'==='mg'||'${unit}'==='min')?5:1)), '${s}')">−</button>
+          <span>${val} ${unit}</span>
+          <button onclick="setVal('${item.id}', ${val} + (('${unit}'==='mg'||'${unit}'==='min')?5:1), '${s}')">+</button>
+        </div>`;
+      }
+      
+      html += `</div>`;
+      
+      // Subcampo de texto (ej: con quién hablé)
+      if(item.sub === "text" && v) {
+        html += `<input type="text" class="input-text" placeholder="¿Con quién?" value="${s}" onchange="setVal('${item.id}', ${v}, this.value)">`;
+      }
+      
+      html += `</div>`;
+    });
+    html += `</div></div>`;
+  });
+  document.getElementById('view-hoy').innerHTML = html;
+  calcularProgreso();
+}
+
+// Calcular progreso basado en la meta del día
+function calcularProgreso() {
+  let total = 0, hechos = 0;
+  let meta = db.metaHoy;
+  if(!meta || meta.length === 0) {
+    // Si no hay meta, contamos todos los toggles
+    Object.values(db.config).forEach(cat => cat.items.forEach(i => { if(i.t === 'tg') { total++; if(getVal(i.id)) hechos++; } }));
+  } else {
+    // Contamos solo los seleccionados
+    meta.forEach(id => {
+      let item = findItem(id);
+      if(item && item.t === 'tg') { total++; if(getVal(id)) hechos++; }
+    });
+  }
+  let pct = total === 0 ? 0 : Math.round((hechos/total)*100);
+  document.getElementById('pct').textContent = pct + '%';
+}
+
+// Buscar item por id
+function findItem(id) {
+  for(let cat of Object.values(db.config)) {
+    let found = cat.items.find(i => i.id === id);
+    if(found) return found;
+  }
+  return null;
+}
+
+// Ajustes: Renderizar selector de meta y configuración
+function renderAjustes() {
+  // 1. Selector de meta
+  let metaHtml = '';
+  Object.values(db.config).forEach(cat => {
+    cat.items.forEach(item => {
+      if(item.t === 'tg') {
+        let checked = db.metaHoy && db.metaHoy.includes(item.id) ? 'checked' : '';
+        metaHtml += `<label style="display:block; padding:5px 0;"><input type="checkbox" ${checked} onchange="toggleMeta('${item.id}', this.checked)"> ${item.l}</label>`;
       }
     });
-    document.getElementById('view-' + vista).innerHTML = html;
   });
+  document.getElementById('meta-selector').innerHTML = metaHtml;
 
-  // Calcular %
-  let tot=0, hch=0;
-  Object.keys(CAT).forEach(k => { if(CAT[k].hoy) CAT[k].items.forEach(i => { if(i.t==='tg'){ tot++; if(val(i.id)) hch++; } }); });
-  document.getElementById('pct').textContent = Math.round((hch/tot)*100) + '%';
+  // 2. Configuración de categorías
+  let configHtml = '';
+  Object.keys(db.config).forEach(k => {
+    let cat = db.config[k];
+    configHtml += `<div style="margin-bottom:15px; border:1px solid var(--line); padding:10px; border-radius:8px;">`;
+    configHtml += `<div class="config-item"><input value="${cat.t}" onchange="renameCat('${k}', this.value)"><button class="del-btn" onclick="delCat('${k}')">Borrar Cat</button></div>`;
+    cat.items.forEach(item => {
+      configHtml += `<div class="config-item"><input value="${item.l}" onchange="renameItem('${k}','${item.id}', this.value)"><button class="del-btn" onclick="delItem('${k}','${item.id}')">X</button></div>`;
+    });
+    configHtml += `<button class="add-btn" onclick="addItem('${k}')">+ Añadir Actividad</button>`;
+    configHtml += `</div>`;
+  });
+  configHtml += `<button class="btn" onclick="addCat()">+ Nueva Categoría</button>`;
+  document.getElementById('config-lista').innerHTML = configHtml;
 }
 
+// Lógica de meta
+function toggleMeta(id, isChecked) {
+  if(!db.metaHoy) db.metaHoy = [];
+  if(isChecked) { if(!db.metaHoy.includes(id)) db.metaHoy.push(id); }
+  else { db.metaHoy = db.metaHoy.filter(x => x !== id); }
+  save(); calcularProgreso();
+}
+
+// Lógica de configuración (Añadir/Editar/Borrar)
+function renameCat(k, name) { db.config[k].t = name; save(); render(); }
+function delCat(k) { if(confirm('¿Borrar categoría?')) { delete db.config[k]; save(); render(); renderAjustes(); } }
+function renameItem(k, id, name) { db.config[k].items.find(i => i.id === id).l = name; save(); render(); }
+function delItem(k, id) { if(confirm('¿Borrar actividad?')) { db.config[k].items = db.config[k].items.filter(i => i.id !== id); save(); render(); renderAjustes(); } }
+function addItem(k) {
+  let name = prompt("Nombre de la nueva actividad:");
+  if(name) {
+    db.config[k].items.push({ id: 'i' + Date.now(), l: name, t: 'tg' });
+    save(); render(); renderAjustes();
+  }
+}
+function addCat() {
+  let name = prompt("Nombre de la nueva categoría:");
+  if(name) {
+    db.config['c' + Date.now()] = { t: name, e: "📌", items: [] };
+    save(); render(); renderAjustes();
+  }
+}
+
+// Gráfico simple
 function dibujarGrafico() {
   let c = document.getElementById('reportes');
-  let fechas = Object.keys(db).sort().slice(-7);
+  let fechas = Object.keys(db.registros).sort().slice(-7);
   if(fechas.length < 2) { c.innerHTML = '<div class="report">Necesitas al menos 2 días de datos para ver el gráfico.</div>'; return; }
 
   let html = `<div class="report"><h3>📈 Evolución Dolor (Últimos 7 días)</h3><canvas id="cv" width="400" height="200"></canvas></div>`;
@@ -190,15 +282,13 @@ function dibujarGrafico() {
   let ctx = document.getElementById('cv').getContext('2d');
   let w = 400, h = 200, pad = 20;
   ctx.clearRect(0,0,w,h);
-  
-  // Ejes
   ctx.strokeStyle = "#ddd"; ctx.beginPath(); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.stroke();
   
   let dolencias = [{id:'d1', color:'#e07a5f', n:'Espalda'}, {id:'e1', color:'#7c6bb0', n:'Ansiedad'}];
   dolencias.forEach(d => {
     ctx.beginPath(); ctx.strokeStyle = d.color; ctx.lineWidth = 3;
     fechas.forEach((f, i) => {
-      let v = db[f][d.id] ? db[f][d.id].v : 0;
+      let v = db.registros[f][d.id] ? db.registros[f][d.id].v : 0;
       let x = pad + (i * ((w-pad*2)/(fechas.length-1)));
       let y = (h-pad) - ((v/10) * (h-pad*2));
       if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
@@ -210,11 +300,11 @@ function dibujarGrafico() {
 function exportar() {
   let a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([JSON.stringify(db)], {type:'application/json'}));
-  a.download = 'midia_backup.json'; a.click();
+  a.download = 'midia_flex_backup.json'; a.click();
 }
 
 function borrarTodo() {
-  if(confirm("¿Borrar todos los datos?")) { db = {}; save(); location.reload(); }
+  if(confirm("¿Borrar todos los datos y configuración?")) { db = { config: DEFAULT_DB, registros: {}, metaHoy: [] }; save(); location.reload(); }
 }
 
 render();
