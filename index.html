@@ -14,99 +14,98 @@
   header { position: sticky; top: 0; z-index: 100; background: linear-gradient(135deg, var(--primary), #B0A3D4); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-radius: 0 0 20px 20px; box-shadow: 0 4px 15px rgba(138, 123, 184, 0.2); }
   header h1 { margin: 0; font-size: 1.2rem; font-weight: 600; letter-spacing: 0.5px; }
   #pct { font-weight: 700; background: rgba(255,255,255,0.25); padding: 6px 12px; border-radius: 20px; font-size: 0.9rem; backdrop-filter: blur(5px); }
+  
+  /* BARRA DE PESTAÑAS HORIZONTAL */
+  .tabs-container { position: sticky; top: 68px; z-index: 90; background: var(--bg); padding: 10px 0; border-bottom: 1px solid var(--line); box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+  .tabs-scroll { display: flex; overflow-x: auto; gap: 8px; padding: 0 15px; scrollbar-width: none; }
+  .tabs-scroll::-webkit-scrollbar { display: none; }
+  .tab-btn { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--line); background: var(--card); color: var(--text); font-size: 0.85rem; font-weight: 600; white-space: nowrap; cursor: pointer; transition: 0.2s; }
+  .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); box-shadow: 0 2px 8px rgba(138, 123, 184, 0.4); }
+
   main { padding: 15px; max-width: 700px; margin: 0 auto; }
   .view { display: none; }
   .view.active { display: block; animation: slideUp 0.3s ease; }
   @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
   
-  .category-group { margin-bottom: 12px; background: var(--card); border-radius: 14px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); overflow: hidden; border: 1px solid var(--line); }
-  .category-header { padding: 16px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 600; font-size: 1rem; color: var(--primary-dark); transition: background 0.2s; }
-  .category-header:active { background: var(--bg); }
-  .category-header .arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--muted); }
-  .category-group.open .arrow { transform: rotate(180deg); }
-  .category-content { display: none; border-top: 1px solid var(--line); }
-  .category-group.open .category-content { display: block; animation: fadeIn 0.2s; }
-  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-  .item { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); padding: 14px 16px; }
+  .item { display: flex; flex-direction: column; border-bottom: 1px solid var(--line); padding: 14px 16px; background: var(--card); border-radius: 12px; margin-bottom: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
   .item:last-child { border-bottom: none; }
   .item-top { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
   .label { font-size: 0.95rem; font-weight: 500; flex: 1; min-width: 120px; }
   
-  .toggle { width: 52px; height: 30px; border-radius: 15px; background: #D1C9E0; position: relative; cursor: pointer; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); }
+  .toggle { width: 52px; height: 30px; border-radius: 15px; background: #D1C9E0; position: relative; cursor: pointer; transition: 0.3s; flex-shrink: 0; }
   .toggle.on { background: var(--ok); }
-  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+  .toggle::after { content: ''; position: absolute; top: 3px; left: 3px; width: 24px; height: 24px; background: white; border-radius: 50%; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
   .toggle.on::after { left: 25px; }
   
-  .scale { display: flex; gap: 4px; margin-top: 10px; width: 100%; }
-  .scale button { flex: 1; height: 32px; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; font-size: 0.8rem; font-weight: 500; cursor: pointer; color: var(--text); transition: 0.2s; }
+  .scale { display: flex; gap: 4px; margin-top: 10px; width: 100%; flex-wrap: wrap; }
+  .scale button { flex: 1; min-width: 28px; height: 32px; border: 1px solid var(--line); background: var(--bg); border-radius: 8px; font-size: 0.8rem; font-weight: 500; cursor: pointer; color: var(--text); transition: 0.2s; }
   .scale button.on { background: var(--primary); color: white; border-color: var(--primary); transform: scale(1.05); }
   
   .stepper { display: flex; align-items: center; gap: 12px; margin-top: 8px; background: var(--bg); padding: 6px 12px; border-radius: 12px; width: fit-content; border: 1px solid var(--line); }
-  .stepper button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); font-size: 1.2rem; cursor: pointer; color: var(--text); display: flex; justify-content: center; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+  .stepper button { width: 34px; height: 34px; border-radius: 10px; border: 1px solid var(--line); background: var(--card); font-size: 1.2rem; cursor: pointer; color: var(--text); }
   .stepper button:active { transform: scale(0.9); }
-  .stepper span { font-weight: 600; min-width: 70px; text-align: center; font-size: 0.9rem; color: var(--primary-dark); }
+  .stepper span { font-weight: 600; min-width: 80px; text-align: center; font-size: 0.9rem; color: var(--primary-dark); }
   
-  /* Cronómetro */
-  .timer-controls { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 8px; flex-wrap: wrap; }
+  .timer-controls { display: flex; align-items: center; gap: 8px; margin-top: 8px; width: 100%; flex-wrap: wrap; }
   .timer-btn { padding: 8px 16px; border-radius: 10px; border: none; font-weight: bold; color: white; cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 0.85rem; }
   .timer-btn.start { background: var(--ok); }
   .timer-btn.stop { background: var(--warn); }
   .timer-display { font-family: monospace; font-size: 1.1rem; font-weight: bold; color: var(--primary); background: var(--bg); padding: 6px 12px; border-radius: 8px; border: 1px solid var(--line); cursor: pointer; }
   
-  /* Modal tiempo manual */
+  .input-text { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
+  .input-text:focus { outline: none; border-color: var(--primary); }
+
+  /* NAVEGACIÓN INFERIOR */
+  nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; border-top: 1px solid var(--line); z-index: 100; padding-bottom: env(safe-area-inset-bottom); }
+  nav button { flex: 1; background: none; border: none; padding: 10px 0; color: var(--muted); cursor: pointer; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500; }
+  nav button.active { color: var(--primary); }
+  nav button span { font-size: 1.4rem; }
+
+  /* DISEÑO PREMIUM Y GRÁFICOS */
+  .report { background: var(--card); padding: 16px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--line); }
+  .report h3 { margin: 0 0 12px; font-size: 1rem; color: var(--primary-dark); }
+  .btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 10px rgba(138, 123, 184, 0.3); }
+  .btn.outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; }
+  .btn.red { background: var(--warn); }
+  
+  /* CONFIGURACIÓN ACORDEÓN EN AJUSTES */
+  .acc-group { margin-bottom: 10px; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--bg); }
+  .acc-head { padding: 12px; font-weight: bold; display: flex; justify-content: space-between; cursor: pointer; font-size: 0.9rem; color: var(--primary-dark); }
+  .acc-body { display: none; padding: 10px; border-top: 1px solid var(--line); background: var(--card); }
+  .acc-group.open .acc-body { display: block; }
+  .config-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px dashed var(--line); gap: 8px; flex-wrap: wrap; }
+  .config-item input[type="text"] { flex: 1; padding: 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); min-width: 100px; font-size: 0.85rem; }
+  .config-item select { padding: 6px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
+  .del-btn { background: #FFE5E5; color: #D32F2F; border: none; padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; }
+  .add-btn { background: #E8F5E9; color: #2E7D32; border: none; padding: 8px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 8px; font-weight: 600; font-size: 0.85rem; }
+
+  /* MODAL */
   .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px; backdrop-filter: blur(2px); }
   .modal.active { display: flex; }
-  .modal-content { background: var(--card); padding: 20px; border-radius: 16px; width: 100%; max-width: 350px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+  .modal-content { background: var(--card); padding: 20px; border-radius: 16px; width: 100%; max-width: 350px; }
   .modal-content h3 { margin: 0 0 15px; color: var(--primary); text-align: center; }
   .time-inputs { display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; }
   .time-inputs label { display: flex; flex-direction: column; font-size: 0.8rem; color: var(--muted); }
   .time-inputs input { padding: 8px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 1rem; margin-top: 5px; }
 
-  .input-text { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--bg); color: var(--text); font-size: 0.85rem; }
-  .input-text:focus { outline: none; border-color: var(--primary); }
-
-  nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--card); display: flex; border-top: 1px solid var(--line); z-index: 100; padding-bottom: env(safe-area-inset-bottom); box-shadow: 0 -2px 10px rgba(0,0,0,0.03); }
-  nav button { flex: 1; background: none; border: none; padding: 12px 0; color: var(--muted); cursor: pointer; font-size: 0.7rem; display: flex; flex-direction: column; align-items: center; gap: 4px; font-weight: 500; transition: 0.2s; }
-  nav button.active { color: var(--primary); }
-  nav button span { font-size: 1.4rem; transition: transform 0.2s; }
-  nav button.active span { transform: translateY(-2px); }
-
-  .report { background: var(--card); padding: 16px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04); border: 1px solid var(--line); }
-  .report h3 { margin: 0 0 12px; font-size: 1rem; color: var(--primary-dark); }
-  .btn { background: var(--primary); color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 0.95rem; font-weight: 600; cursor: pointer; margin-top: 10px; transition: 0.2s; box-shadow: 0 4px 10px rgba(138, 123, 184, 0.3); }
-  .btn:active { transform: scale(0.98); }
-  .btn.outline { background: transparent; color: var(--primary); border: 2px solid var(--primary); box-shadow: none; }
-  .btn.red { background: var(--warn); box-shadow: 0 4px 10px rgba(230, 122, 95, 0.3); }
-  
-  .config-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--line); gap: 10px; flex-wrap: wrap; }
-  .config-item input[type="text"] { flex: 1; padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); min-width: 100px; }
-  .config-item select { padding: 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); color: var(--text); }
-  .del-btn { background: #FFE5E5; color: #D32F2F; border: none; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.8rem; font-weight: 600; }
-  .add-btn { background: #E8F5E9; color: #2E7D32; border: none; padding: 10px; border-radius: 8px; cursor: pointer; width: 100%; margin-top: 10px; font-weight: 600; font-size: 0.85rem; }
-  
-  .meta-list { max-height: 250px; overflow-y: auto; border: 1px solid var(--line); padding: 12px; border-radius: 10px; background: var(--bg); margin-bottom: 10px; }
-  .meta-list label { display: flex; gap: 10px; padding: 6px 0; font-size: 0.9rem; align-items: center; }
-  
-  .filter-row { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
-  .filter-row select { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--bg); color: var(--text); font-size: 0.9rem; }
-  #chart-container { width: 100%; overflow-x: auto; }
-  canvas { max-width: 100%; height: auto; margin-top: 10px; }
-  .loading-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 9999; color: white; font-weight: bold; font-size: 1.2rem; backdrop-filter: blur(3px); }
+  /* MI DÍA PREMIUM LISTAS */
+  .motiv-list { list-style: none; padding: 0; margin: 0; }
+  .motiv-list li { display: flex; align-items: center; gap: 10px; padding: 10px 0; border-bottom: 1px dashed var(--line); font-size: 0.9rem; }
+  .motiv-list li.done { color: var(--muted); text-decoration: line-through; }
+  .motiv-list li .icon { font-size: 1.2rem; }
+  .circular-chart { display: block; margin: 10px auto; max-width: 150px; }
 </style>
 </head>
 <body>
-<div class="loading-overlay" id="pdf-loading">Generando PDF... ⏳</div>
-
-<!-- Modal para tiempo manual -->
 <div class="modal" id="timeModal">
   <div class="modal-content">
-    <h3 id="modal-title">Apuntar Tiempo</h3>
+    <h3>Apuntar Duración</h3>
+    <div style="text-align:center; font-size:0.9rem; margin-bottom:10px; color:var(--muted);">¿Cuánto tiempo le has dedicado?</div>
     <div class="time-inputs">
-      <label>Inicio: <input type="time" id="inp-start"></label>
-      <label>Fin: <input type="time" id="inp-end"></label>
+      <label>Horas: <input type="number" id="inp-hours" min="0" max="23" value="0"></label>
+      <label>Minutos: <input type="number" id="inp-mins" min="0" max="59" value="0"></label>
     </div>
-    <button class="btn" onclick="saveManualTime()">Guardar Tiempo</button>
+    <button class="btn" onclick="saveManualDuration()">Guardar</button>
     <button class="btn outline" onclick="closeModal()">Cancelar</button>
   </div>
 </div>
@@ -116,195 +115,356 @@
   <div id="pct">0%</div>
 </header>
 
+<!-- PESTAÑAS DE CATEGORÍAS (Deslizables) -->
+<div class="tabs-container" id="hoy-tabs-container">
+  <div class="tabs-scroll" id="hoy-tabs"></div>
+</div>
+
 <main>
-  <div id="view-hoy" class="view active"></div>
+  <div id="view-hoy" class="view active"><div id="items-container"></div></div>
   
+  <div id="view-premium" class="view">
+    <div class="report">
+      <h3>🏆 Mi Día Premium</h3>
+      <p style="font-size:0.85rem; color:var(--muted); text-align:center;">Progreso de tus metas de hoy</p>
+      <div id="premium-content"></div>
+    </div>
+  </div>
+
   <div id="view-informes" class="view">
     <div class="report">
-      <h3>📊 Generador de Informes</h3>
+      <h3>📊 Informes y Gráficos</h3>
       <div class="filter-row">
         <select id="rep-tipo" onchange="updateRepFiltros()">
+          <option value="diario">Informe Diario (Metas)</option>
           <option value="cat">Por Categoría</option>
-          <option value="item">Por Actividad</option>
-          <option value="dia">Resumen por Día</option>
+          <option value="item">Por Actividad individual</option>
         </select>
+      </div>
+      <div class="filter-row">
         <select id="rep-tiempo" onchange="generarInforme()">
+          <option value="1">Solo Hoy</option>
           <option value="7">Últimos 7 días</option>
           <option value="30">Últimos 30 días</option>
           <option value="mes_act">Mes actual</option>
+          <option value="365">Año actual</option>
         </select>
       </div>
-      <div class="filter-row" id="rep-extra-filtros" style="display:none;">
-      </div>
+      <div class="filter-row" id="rep-extra-filtros" style="display:none;"></div>
+      
       <div id="chart-container">
+        <!-- Gráfico Circular SVG -->
+        <svg viewBox="0 0 36 36" class="circular-chart" id="circle-chart" style="display:none;">
+          <path class="circle-bg" stroke="var(--line)" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <path class="circle" stroke="var(--primary)" stroke-width="3" stroke-dasharray="0, 100" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+          <text x="18" y="20.35" class="percentage" fill="var(--text)" font-size="8" font-weight="bold" text-anchor="middle" id="circle-text">0%</text>
+        </svg>
         <canvas id="reportCanvas" width="600" height="300"></canvas>
       </div>
-      <div id="report-resumen" style="margin-top:15px; font-size:0.9rem; color:var(--muted);"></div>
-      <button class="btn outline" style="margin-top:15px;" onclick="descargarPDF()">📄 Descargar este Informe en PDF</button>
+      
+      <div id="report-resumen" style="margin-top:15px; font-size:0.9rem; color:var(--text);"></div>
+      <button class="btn outline" style="margin-top:15px;" onclick="descargarPDF()">📄 Descargar Informe PDF</button>
     </div>
   </div>
 
   <div id="view-ajustes" class="view">
     <div class="report">
-      <h3>⚙️ Configuración General</h3>
-      <p style="font-size:0.85rem; color:var(--muted); margin-top:0;">Tus datos son 100% privados. Se guardan solo en este dispositivo.</p>
-      <button class="btn outline" onclick="migrarDatos()" style="margin-bottom:10px; border-color:#E67A5F; color:#E67A5F;">🔄 Migrar datos de versión anterior</button>
+      <h3>⚙️ Ajustes y Preferencias</h3>
+      
+      <label style="font-size:0.85rem; font-weight:bold; display:block; margin-top:10px;">Ordenar Categorías y Actividades:</label>
+      <select id="orden-pref" onchange="db.orden=this.value; save(); render(); renderAjustes();" style="width:100%; padding:10px; border-radius:8px; margin-top:5px; border:1px solid var(--line); background:var(--bg); color:var(--text);">
+        <option value="def">Orden Original</option>
+        <option value="alf">Alfabético (A-Z)</option>
+        <option value="mas_mes">Más usadas (Último mes)</option>
+        <option value="menos_mes">Menos usadas (Último mes)</option>
+        <option value="mas_sem">Más usadas (Última semana)</option>
+        <option value="menos_sem">Menos usadas (Última semana)</option>
+      </select>
+
+      <button class="btn outline" onclick="migrarDatos()" style="margin-top:15px; border-color:#E67A5F; color:#E67A5F;">🔄 Restaurar / Recuperar datos</button>
     </div>
     
     <div class="report">
-      <h3>🎯 Tu 100% de hoy</h3>
-      <p style="font-size: 0.85rem; color: var(--muted); margin-top:0;">Selecciona qué actividades cuentan para el progreso de hoy.</p>
+      <h3>🎯 Configurar tu 100% de hoy</h3>
+      <p style="font-size: 0.85rem; color: var(--muted); margin-top:0;">Despliega las categorías y marca las metas.</p>
       <div id="meta-extra" style="margin-bottom:10px;"></div>
-      <div class="meta-list" id="meta-selector"></div>
+      <div id="meta-selector"></div>
     </div>
 
     <div class="report">
-      <h3>🛠️ Editar Categorías y Actividades</h3>
+      <h3>🛠️ Editar Actividades</h3>
       <div id="config-lista"></div>
-    </div>
-
-    <div class="report">
-      <h3>💾 Copias de Seguridad</h3>
-      <button class="btn" onclick="exportar()">Exportar Copia (JSON)</button>
-      <button class="btn outline" onclick="document.getElementById('file-import').click()">Importar Copia (JSON)</button>
-      <input type="file" id="file-import" style="display:none" accept=".json" onchange="importar(event)">
-      <button class="btn red" onclick="borrarTodo()">Borrar todos los datos</button>
     </div>
   </div>
 </main>
 
 <nav>
   <button class="active" onclick="nav('hoy',this)"><span>☀️</span>Hoy</button>
+  <button onclick="nav('premium',this)"><span>🏆</span>Premium</button>
   <button onclick="nav('informes',this)"><span>📊</span>Informes</button>
   <button onclick="nav('ajustes',this)"><span>⚙️</span>Ajustes</button>
 </nav>
 
 <script>
+// TUS DATOS RESTAURADOS Y AMPLIADOS
 const DEFAULT_DB = {
   "casa": { t: "Casa", e: "🏠", items: [
     {id:"c1", l:"Hacer comida", t:"num", unit:"veces"}, {id:"c2", l:"Barrer", t:"num", unit:"veces"}, 
     {id:"c3", l:"Lavadora", t:"num", unit:"veces"}, {id:"c4", l:"Tender", t:"num", unit:"veces"}, 
-    {id:"c5", l:"Recoger ropa", t:"num", unit:"min"}, {id:"c6", l:"Limpiar baño", t:"num", unit:"min"}, 
-    {id:"c7", l:"Lavavajillas", t:"num", unit:"veces"}, {id:"c8", l:"Hacer la cama", t:"tg"}
+    {id:"c5", l:"Recoger ropa 1 lavadora", t:"time"}, {id:"c6", l:"Limpiar baño", t:"time"}, 
+    {id:"c7", l:"Lavavajillas", t:"num", unit:"veces"}, {id:"c8", l:"Hacer la cama", t:"tg"},
+    {id:"i1", l:"Quitar polvo", t:"tg"}, {id:"i2", l:"Colocar sofás 🛋️", t:"tg"}, 
+    {id:"i3", l:"Doblar ropa de 1 lavadora", t:"tg"}, {id:"i4", l:"Descargar lavavajillas", t:"tg"}
   ]},
   "medicacion": { t: "Medicación", e: "💊", items: [
     {id:"m1", l:"Venlafaxina", t:"num", unit:"past.", mg:"75"}, {id:"m2", l:"Arcoxia", t:"num", unit:"past.", mg:"90"}, 
     {id:"m3", l:"Nolotil", t:"num", unit:"cáps", mg:""}, {id:"m4", l:"Paracetamol", t:"num", unit:"past.", mg:"650"}, 
     {id:"m5", l:"Ibuprofeno", t:"num", unit:"past.", mg:"600"}, {id:"m6", l:"Diazepam", t:"num", unit:"past.", mg:"5"}, 
     {id:"m7", l:"Prednisona", t:"num", unit:"past.", mg:"30"}, {id:"m8", l:"Diclofenaco crema", t:"tg"}, 
-    {id:"m9", l:"Manta eléctrica", t:"num", unit:"min", step:10}, {id:"m10", l:"TENS", t:"num", unit:"min", step:10}
+    {id:"m9", l:"Manta eléctrica", t:"time"}, {id:"m10", l:"TENS", t:"time"}, {id:"m11", l:"Parafina", t:"tg"}
   ]},
   "dolor": { t: "Dolores Físicos", e: "💢", items: [
     {id:"d1", l:"Espalda", t:"sc", sub:"text"}, {id:"d2", l:"Rodillas", t:"sc", sub:"text"}, 
-    {id:"d3", l:"Manos", t:"sc", sub:"text"}, {id:"d4", l:"Caderas", t:"sc", sub:"text"}
+    {id:"d3", l:"Manos", t:"sc", sub:"text"}, {id:"d4", l:"Caderas", t:"sc", sub:"text"}, 
+    {id:"d5", l:"Cabeza", t:"sc", sub:"text"}, {id:"d6", l:"Mandíbulas", t:"sc", sub:"text"}, 
+    {id:"d7", l:"Piernas", t:"sc", sub:"text"}, {id:"d8", l:"Tobillos", t:"sc", sub:"text"}, 
+    {id:"d9", l:"Rizoartrosis", t:"sc", sub:"text"}, {id:"d10", l:"Hombros", t:"sc", sub:"text"}, 
+    {id:"d11", l:"Estómago", t:"sc", sub:"text"}, {id:"d12", l:"Llagas", t:"num", sub:"text"}, 
+    {id:"d13", l:"Picores", t:"sc", sub:"text"}, {id:"d14", l:"Tinnitus", t:"tg", sub:"text"}, 
+    {id:"d15", l:"Cervicales", t:"sc", sub:"text"}
   ]},
   "emociones": { t: "Emociones y Ánimo", e: "🧠", items: [
     {id:"e1", l:"Ansiedad", t:"sc", sub:"text"}, {id:"e2", l:"Tristeza", t:"sc", sub:"text"}, 
-    {id:"e3", l:"Agotamiento", t:"sc", sub:"text"}, {id:"e5", l:"Alegría", t:"sc", sub:"text"}
+    {id:"e3", l:"Agotamiento", t:"sc", sub:"text"}, {id:"e4", l:"Irritabilidad", t:"sc", sub:"text"},
+    {id:"e5", l:"Alegría", t:"sc", sub:"text"}, {id:"e6", l:"Entusiasmo", t:"sc", sub:"text"},
+    {id:"e7", l:"Rabia", t:"sc", sub:"text"}, {id:"e8", l:"Frustración", t:"sc", sub:"text"},
+    {id:"e9", l:"Desesperanza", t:"sc", sub:"text"}, {id:"e10", l:"Culpa", t:"sc", sub:"text"},
+    {id:"e11", l:"Vergüenza", t:"sc", sub:"text"}, {id:"e12", l:"Enojo", t:"sc", sub:"text"},
+    {id:"e13", l:"Envidia", t:"sc", sub:"text"}, {id:"e14", l:"Esperanza", t:"sc", sub:"text"},
+    {id:"e15", l:"Gratitud", t:"sc", sub:"text"}, {id:"e16", l:"Decepción", t:"sc", sub:"text"},
+    {id:"e17", l:"Orgullo", t:"sc", sub:"text"}, {id:"e18", l:"Amor", t:"sc", sub:"text"},
+    {id:"e19", l:"Pasión", t:"sc", sub:"text"}, {id:"e20", l:"Desprecio", t:"sc", sub:"text"},
+    {id:"e21", l:"Celos", t:"sc", sub:"text"}, {id:"e22", l:"Compasión", t:"sc", sub:"text"},
+    {id:"e23", l:"Miedo", t:"sc", sub:"text"}, {id:"e24", l:"Asco", t:"sc", sub:"text"},
+    {id:"e25", l:"Desánimo", t:"sc", sub:"text"}
   ]},
   "relaciones": { t: "Relaciones", e: "👥", items: [
-    {id:"r1", l:"Hablar con familia", t:"tg", sub:"text"}
+    {id:"r1", l:"Hablar con familia", t:"tg", sub:"text"}, {id:"r2", l:"Hablar con amigos", t:"tg", sub:"text"},
+    {id:"r3", l:"Relaciones de bar", t:"tg", sub:"text"}, {id:"r4", l:"Momentos con amigos", t:"tg", sub:"text"},
+    {id:"r5", l:"Actividades en familia", t:"tg", sub:"text"}, {id:"r6", l:"Chatear con amigos", t:"tg", sub:"text"},
+    {id:"r7", l:"Actividades sociales", t:"tg", sub:"text"}, {id:"r8", l:"Relaciones sociales necesarias", t:"tg", sub:"text"},
+    {id:"r9", l:"Momentos de ocio elegido", t:"tg", sub:"text"}
+  ]},
+  "entretenimiento": { t: "Entretenimiento", e: "🍿", items: [
+    {id:"en1", l:"Series", t:"num"}, {id:"en2", l:"Películas", t:"num"}, {id:"en3", l:"Juegos Móvil", t:"num"},
+    {id:"en4", l:"Arcilla y modelar", t:"tg"}, {id:"en5", l:"Pintar", t:"tg"}, {id:"en6", l:"Coser", t:"tg"},
+    {id:"en7", l:"Manualidades varias", t:"tg"}, {id:"en8", l:"Scroll", t:"num"}
+  ]},
+  "aprender": { t: "Aprender", e: "📚", items: [
+    {id:"a1", l:"Autoayuda", t:"num", sub:"text"}, {id:"a2", l:"Salud🩻", t:"tg", sub:"text"},
+    {id:"a3", l:"Artes🖼️", t:"tg", sub:"text"}, {id:"a4", l:"Artesanías", t:"tg", sub:"text"},
+    {id:"a5", l:"Cocina 🍳", t:"tg", sub:"text"}, {id:"a6", l:"Organización y limpieza", t:"tg", sub:"text"},
+    {id:"a7", l:"Otros", t:"tg", sub:"text"}
+  ]},
+  "atencion": { t: "Atención Plena", e: "🧘", items: [
+    {id:"at1", l:"Meditación e Hipnosis", t:"tg"}, {id:"at2", l:"Observar conscientemente", t:"tg"},
+    {id:"at3", l:"Respiración", t:"tg"}, {id:"at4", l:"Péndulo", t:"tg"}, {id:"at5", l:"Oraciones y Ángeles", t:"tg"}
+  ]},
+  "movimiento": { t: "Movimiento", e: "🚶", items: [
+    {id:"mv1", l:"Caminar y senderismo", t:"num", sub:"text"}, {id:"mv2", l:"Pasos diarios", t:"num", sub:"text"},
+    {id:"mv3", l:"Pasear a la perra, corto", t:"tg"}, {id:"mv4", l:"Pasear a la perra. Largo", t:"tg"},
+    {id:"mv5", l:"Fuerza", t:"num"}, {id:"mv6", l:"Taichi", t:"num"}, {id:"mv7", l:"Bicicleta 🚲", t:"num"}, 
+    {id:"mv8", l:"Piscina/Río/playa", t:"num"}
+  ]},
+  "compras": { t: "Compras y Ventas", e: "🛒", items: [
+    {id:"cp1", l:"Hacer lista de compra", t:"tg"}, {id:"cp2", l:"Supermercado compra corta", t:"tg"},
+    {id:"cp3", l:"Supermercado compra grande", t:"tg"}, {id:"cp4", l:"Paquetería cercanos", t:"tg"},
+    {id:"cp5", l:"Paquetería lejanos", t:"tg"}, {id:"cp6", l:"Búsqueda y comparativa", t:"tg"},
+    {id:"cp7", l:"Compras para otros", t:"tg"}, {id:"cp8", l:"Ropa y calzado", t:"tg"},
+    {id:"cp9", l:"Electrodomésticos", t:"tg"}, {id:"cp10", l:"Cosas casa", t:"tg"}, {id:"cp11", l:"Ventas, anuncios", t:"tg"}
+  ]},
+  "gestionar": { t: "Gestionar", e: "📋", items: [
+    {id:"gs1", l:"Citas y pruebas médicas", t:"tg"}, {id:"gs2", l:"Seguros", t:"tg"},
+    {id:"gs3", l:"Telecomunicaciones", t:"tg"}, {id:"gs4", l:"Facturas varias", t:"tg"},
+    {id:"gs5", l:"Piso Valencia", t:"tg"}, {id:"gs6", l:"Ahorros y bancos", t:"tg"},
+    {id:"gs7", l:"Abogado y asesoría", t:"tg"}, {id:"gs8", l:"Cole", t:"tg"}, {id:"gs9", l:"Discapacidad/dependencia", t:"tg"}
+  ]},
+  "cuidados": { t: "Cuidados Personales", e: "💅", items: [
+    {id:"cu1", l:"Tinte", t:"tg"}, {id:"cu2", l:"Peluquería", t:"tg"}, {id:"cu3", l:"Depilación", t:"tg"},
+    {id:"cu4", l:"Ducha", t:"tg"}, {id:"cu5", l:"Hidratación", t:"tg"}, {id:"cu6", l:"Skincare", t:"tg"},
+    {id:"cu7", l:"Mascarilla", t:"tg"}, {id:"cu8", l:"Uñas", t:"tg"}, {id:"cu9", l:"Otras", t:"tg"}
+  ]},
+  "alejandra": { t: "Alejandra", e: "👧", items: [
+    {id:"al1", l:"Deberes", t:"tg"}, {id:"al2", l:"Inglés", t:"tg"}, {id:"al3", l:"Extraescolares", t:"tg"},
+    {id:"al4", l:"Ocio compartido", t:"tg"}, {id:"al5", l:"Conversaciones vip", t:"tg"},
+    {id:"al6", l:"Cumpleaños de amigos", t:"tg"}, {id:"al7", l:"Dormir", t:"tg"}, {id:"al8", l:"A la cama", t:"tg"}
+  ]},
+  "sanitaria": { t: "Asistencia Sanitaria", e: "🩺", items: [
+    {id:"sa1", l:"Lucas", t:"tg"}, {id:"sa2", l:"Alejandra", t:"tg"}, {id:"sa3", l:"Manolo", t:"tg"},
+    {id:"sa4", l:"Fátima", t:"tg"}, {id:"sa5", l:"Farmacia", t:"tg"}, {id:"sa6", l:"Veterinario", t:"tg"}
+  ]},
+  "limpieza": { t: "Limpieza a Fondo", e: "🧹", items: [
+    {id:"li1", l:"Armarios de cocina", t:"tg"}, {id:"li2", l:"Azulejos", t:"tg"}, {id:"li3", l:"Cristales", t:"tg"},
+    {id:"li4", l:"Persianas", t:"tg"}, {id:"li5", l:"Armario pasillo", t:"tg"}, {id:"li6", l:"Armario limpieza", t:"tg"},
+    {id:"li7", l:"Armario rellano", t:"tg"}, {id:"li8", l:"Puertas", t:"tg"}, {id:"li9", l:"Reparaciones", t:"tg"}, {id:"li10", l:"Otras", t:"tg"}
   ]}
 };
 
-let db = JSON.parse(localStorage.getItem('miDiaPremium') || 'null');
+let db = JSON.parse(localStorage.getItem('miDiaPremiumFinal') || 'null');
 if(!db || !db.config) {
-  db = { config: DEFAULT_DB, registros: {}, metaHoy: [], metaExtra: "" };
+  db = { config: DEFAULT_DB, registros: {}, metaHoy: [], metaExtra: "", orden: "def" };
   save();
 }
 
+let catActiva = Object.keys(db.config)[0];
 const hoy = new Date().toISOString().slice(0,10);
 if(!db.registros[hoy]) db.registros[hoy] = {};
 
-function save() { localStorage.setItem('miDiaPremium', JSON.stringify(db)); }
+function save() { localStorage.setItem('miDiaPremiumFinal', JSON.stringify(db)); }
 
+// --- ORDENACIÓN ---
+function getOrderedCategories() {
+  let keys = Object.keys(db.config);
+  if(db.orden === "alf") return keys.sort((a,b) => db.config[a].t.localeCompare(db.config[b].t));
+  
+  if(db.orden.includes("mas") || db.orden.includes("menos")) {
+    let dias = db.orden.includes("mes") ? 30 : 7;
+    let stats = {};
+    keys.forEach(k => stats[k] = 0);
+    
+    let limite = new Date(); limite.setDate(limite.getDate() - dias);
+    Object.keys(db.registros).forEach(f => {
+      if(new Date(f) >= limite) {
+        Object.keys(db.registros[f]).forEach(itemId => {
+          let val = db.registros[f][itemId].v;
+          if(val && val !== 0) {
+            for(let k in db.config) {
+              if(db.config[k].items.find(i => i.id === itemId)) stats[k]++;
+            }
+          }
+        });
+      }
+    });
+    
+    if(db.orden.includes("mas")) keys.sort((a,b) => stats[b] - stats[a]);
+    else keys.sort((a,b) => stats[a] - stats[b]);
+  }
+  return keys;
+}
+
+function getOrderedItems(catId) {
+  let items = [...db.config[catId].items];
+  if(db.orden === "alf") return items.sort((a,b) => a.l.localeCompare(b.l));
+  
+  if(db.orden.includes("mas") || db.orden.includes("menos")) {
+    let dias = db.orden.includes("mes") ? 30 : 7;
+    let stats = {};
+    items.forEach(i => stats[i.id] = 0);
+    
+    let limite = new Date(); limite.setDate(limite.getDate() - dias);
+    Object.keys(db.registros).forEach(f => {
+      if(new Date(f) >= limite) {
+        items.forEach(i => {
+          let val = db.registros[f][i.id] ? db.registros[f][i.id].v : null;
+          if(val && val !== 0) stats[i.id]++;
+        });
+      }
+    });
+    
+    if(db.orden.includes("mas")) items.sort((a,b) => stats[b.id] - stats[a.id]);
+    else items.sort((a,b) => stats[a.id] - stats[b.id]);
+  }
+  return items;
+}
+
+// --- NAVEGACIÓN ---
 function nav(id, btn) {
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
   document.getElementById('view-' + id).classList.add('active');
   btn.classList.add('active');
+  
+  let tabsCont = document.getElementById('hoy-tabs-container');
+  if(id === 'hoy') { tabsCont.style.display = 'block'; }
+  else { tabsCont.style.display = 'none'; }
+  
   if(id === 'informes') updateRepFiltros();
   if(id === 'ajustes') renderAjustes();
+  if(id === 'premium') renderPremium();
 }
 
-// --- LÓGICA DE TIEMPO Y CRONÓMETRO ---
-let activeTimer = null;
-let timerInterval = null;
-
-function formatTime(secs) {
-  let h = Math.floor(secs / 3600);
-  let m = Math.floor((secs % 3600) / 60);
-  let s = secs % 60;
-  return `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+function switchTab(catId, btn) {
+  catActiva = catId;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  renderItems();
 }
 
-function toggleTimer(id) {
-  let v = getVal(id);
-  let startMs = v ? v.startMs : null;
+// --- RENDERIZADO PRINCIPAL ---
+function render() {
+  let tabsHtml = '';
+  let cats = getOrderedCategories();
+  if(!cats.includes(catActiva)) catActiva = cats[0];
   
-  if(activeTimer === id) {
-    // Detener
-    clearInterval(timerInterval);
-    activeTimer = null;
-    let duration = Math.floor((Date.now() - startMs) / 1000);
-    setVal(id, { startMs: startMs, endMs: Date.now(), duration: duration, manual: false });
-  } else {
-    // Iniciar (si ya había uno, lo paramos)
-    if(activeTimer) toggleTimer(activeTimer);
-    activeTimer = id;
-    let newVal = { startMs: Date.now(), endMs: null, duration: 0, manual: false };
-    setVal(id, newVal);
-    timerInterval = setInterval(() => {
-      let el = document.getElementById('timer-display-' + id);
-      if(el) el.textContent = formatTime(Math.floor((Date.now() - startMs) / 1000));
-    }, 1000);
-  }
+  cats.forEach(k => {
+    let cat = db.config[k];
+    tabsHtml += `<button class="tab-btn ${k===catActiva?'active':''}" onclick="switchTab('${k}', this)">${cat.e||'📌'} ${cat.t}</button>`;
+  });
+  document.getElementById('hoy-tabs').innerHTML = tabsHtml;
+  renderItems();
+  calcularProgreso();
 }
 
-function openManualTime(id) {
-  let v = getVal(id);
-  document.getElementById('modal-title').textContent = "Apuntar Tiempo Manual";
+function renderItems() {
+  let cat = db.config[catActiva];
+  if(!cat) return;
+  let html = '';
+  let items = getOrderedItems(catActiva);
   
-  if(v && v.startMs) {
-    let d1 = new Date(v.startMs);
-    let d2 = new Date(v.endMs || Date.now());
-    document.getElementById('inp-start').value = d1.getHours().toString().padStart(2,'0') + ':' + d1.getMinutes().toString().padStart(2,'0');
-    document.getElementById('inp-end').value = d2.getHours().toString().padStart(2,'0') + ':' + d2.getMinutes().toString().padStart(2,'0');
-  } else {
-    document.getElementById('inp-start').value = "";
-    document.getElementById('inp-end').value = "";
-  }
+  items.forEach(item => {
+    let v = getVal(item.id);
+    let s = getSub(item.id);
+    html += `<div class="item"><div class="item-top"><div class="label">${item.l}</div>`;
+    
+    if(item.t === "tg") html += `<div class="toggle ${v?'on':''}" onclick="setVal('${item.id}', ${!v})"></div>`;
+    
+    if(item.t === "sc") {
+      html += `<div class="scale">`;
+      for(let i=0; i<=10; i++) html += `<button class="${v===i?'on':''}" onclick="setVal('${item.id}', ${v===i?'null':i})">${i}</button>`;
+      html += `</div>`;
+    }
+    
+    if(item.t === "num") {
+      let val = v || 0;
+      let step = item.step || 1;
+      let unitText = `${val} ${item.unit || ""}`;
+      if(item.mg && val > 0) unitText = `${val} ${item.unit} (${val * parseInt(item.mg)}mg)`;
+      
+      html += `<div class="stepper">
+        <button onclick="setVal('${item.id}', Math.max(0, ${val} - ${step}), '${s}')">−</button>
+        <span>${unitText}</span>
+        <button onclick="setVal('${item.id}', ${val + step}, '${s}')">+</button>
+      </div>`;
+    }
+
+    if(item.t === "time") {
+      let mins = v && v.duration ? Math.floor(v.duration / 60) : 0;
+      html += `<div class="timer-controls">
+        <button class="timer-btn start" onclick="openManualDuration('${item.id}')">⏱️ Añadir Tiempo</button>
+        ${mins > 0 ? `<div class="timer-display">${mins} min</div>` : ''}
+      </div>`;
+    }
+    
+    html += `</div>`;
+    if(item.sub === "text" && v) {
+      html += `<input type="text" class="input-text" placeholder="Nota / Detalle..." value="${s}" onchange="setVal('${item.id}', ${v}, this.value)">`;
+    }
+    html += `</div>`;
+  });
   
-  document.getElementById('timeModal').classList.add('active');
-  document.getElementById('timeModal').dataset.id = id;
+  document.getElementById('items-container').innerHTML = html;
 }
 
-function closeModal() {
-  document.getElementById('timeModal').classList.remove('active');
-}
-
-function saveManualTime() {
-  let id = document.getElementById('timeModal').dataset.id;
-  let start = document.getElementById('inp-start').value;
-  let end = document.getElementById('inp-end').value;
-  
-  if(!start || !end) { alert("Por favor, rellena ambas horas."); return; }
-  
-  let today = new Date();
-  let [h1, m1] = start.split(':').map(Number);
-  let [h2, m2] = end.split(':').map(Number);
-  
-  let d1 = new Date(today.getFullYear(), today.getMonth(), today.getDate(), h1, m1);
-  let d2 = new Date(today.getFullYear(), today.getMonth(), today.getDate(), h2, m2);
-  
-  if(d2 < d1) d2.setDate(d2.getDate() + 1); // Por si acaba al día siguiente
-  
-  let duration = Math.floor((d2.getTime() - d1.getTime()) / 1000);
-  setVal(id, { startMs: d1.getTime(), endMs: d2.getTime(), duration: duration, manual: true });
-  closeModal();
-}
-
-// --- RESTO DE LA LÓGICA ---
 function getVal(id) { return db.registros[hoy] && db.registros[hoy][id] ? db.registros[hoy][id].v : null; }
 function getSub(id) { return db.registros[hoy] && db.registros[hoy][id] ? db.registros[hoy][id].s : ""; }
 
@@ -312,100 +472,46 @@ function setVal(id, v, s) {
   if(!db.registros[hoy]) db.registros[hoy] = {};
   if(v === null || v === false || v === "") delete db.registros[hoy][id];
   else db.registros[hoy][id] = { v: v, s: s !== undefined ? s : getSub(id), t: Date.now() };
-  save(); render();
+  save(); renderItems(); calcularProgreso(); 
+  if(document.getElementById('view-premium').classList.contains('active')) renderPremium();
 }
 
-function toggleAcordeon(id) {
-  let el = document.getElementById('cat-' + id);
-  if(el) {
-    el.classList.toggle('open');
-    let isOpen = el.classList.contains('open');
-    localStorage.setItem('acordeon_' + id, isOpen ? '1' : '0');
+// --- DURACIÓN MANUAL ---
+function openManualDuration(id) {
+  document.getElementById('timeModal').classList.add('active');
+  document.getElementById('timeModal').dataset.id = id;
+  document.getElementById('inp-hours').value = 0;
+  document.getElementById('inp-mins').value = 0;
+}
+
+function closeModal() { document.getElementById('timeModal').classList.remove('active'); }
+
+function saveManualDuration() {
+  let id = document.getElementById('timeModal').dataset.id;
+  let h = parseInt(document.getElementById('inp-hours').value) || 0;
+  let m = parseInt(document.getElementById('inp-mins').value) || 0;
+  let durationSec = (h * 3600) + (m * 60);
+  
+  if(durationSec > 0) {
+    let current = getVal(id) || {};
+    let newDuration = (current.duration || 0) + durationSec;
+    setVal(id, { duration: newDuration, startMs: Date.now(), endMs: Date.now() });
   }
+  closeModal();
 }
 
-function render() {
-  let html = '';
-  let first = true;
-  Object.keys(db.config).forEach(k => {
-    let cat = db.config[k];
-    let isOpen = localStorage.getItem('acordeon_' + k) === '1' || (first && localStorage.getItem('acordeon_' + k) === null);
-    if(first) first = false;
-    
-    html += `<div class="category-group ${isOpen ? 'open' : ''}" id="cat-${k}">
-      <div class="category-header" onclick="toggleAcordeon('${k}')">
-        <span>${cat.e || '📌'} ${cat.t}</span>
-        <span class="arrow">▼</span>
-      </div>
-      <div class="category-content">`;
-      
-    cat.items.forEach(item => {
-      let v = getVal(item.id);
-      let s = getSub(item.id);
-      html += `<div class="item"><div class="item-top"><div class="label">${item.l}</div>`;
-      
-      if(item.t === "tg") html += `<div class="toggle ${v?'on':''}" onclick="setVal('${item.id}', ${!v})"></div>`;
-      
-      if(item.t === "sc") {
-        html += `<div class="scale">`;
-        for(let i=0; i<=10; i++) html += `<button class="${v===i?'on':''}" onclick="setVal('${item.id}', ${v===i?'null':i})">${i}</button>`;
-        html += `</div>`;
-      }
-      
-      if(item.t === "num") {
-        let val = v || 0;
-        let step = item.step || 1;
-        let unitText = `${val} ${item.unit || ""}`;
-        if(item.mg && val > 0) unitText = `${val} ${item.unit} (${val * parseInt(item.mg)}mg)`;
-        
-        html += `<div class="stepper">
-          <button onclick="setVal('${item.id}', Math.max(0, ${val} - ${step}), '${s}')">−</button>
-          <span>${unitText}</span>
-          <button onclick="setVal('${item.id}', ${val + step}, '${s}')">+</button>
-        </div>`;
-      }
-
-      if(item.t === "time") {
-        let timerHtml = `<div class="timer-controls">`;
-        if(!v) {
-          timerHtml += `<button class="timer-btn start" onclick="toggleTimer('${item.id}')">▶ Iniciar</button>`;
-        } else {
-          let isRunning = activeTimer === item.id;
-          let display = isRunning ? formatTime(Math.floor((Date.now() - v.startMs)/1000)) : formatTime(v.duration);
-          if(isRunning) {
-            timerHtml += `<button class="timer-btn stop" onclick="toggleTimer('${item.id}')">⏹ Parar</button>`;
-          } else {
-             timerHtml += `<button class="timer-btn start" style="background:var(--blue)" onclick="toggleTimer('${item.id}')">▶ Volver a iniciar</button>`;
-          }
-          timerHtml += `<div class="timer-display" id="timer-display-${item.id}" onclick="openManualTime('${item.id}')">${display} ✎</div>`;
-        }
-        timerHtml += `</div>`;
-        html += timerHtml;
-      }
-      
-      html += `</div>`;
-      
-      if(item.sub === "text" && v) {
-        html += `<input type="text" class="input-text" placeholder="Añadir nota o detalle..." value="${s}" onchange="setVal('${item.id}', ${v}, this.value)">`;
-      }
-      html += `</div>`;
-    });
-    html += `</div></div>`;
-  });
-  document.getElementById('view-hoy').innerHTML = html;
-  calcularProgreso();
-}
-
-// ... (El resto de funciones de progreso, informes, config, etc. se mantienen igual)
+// --- PROGRESO 100% ---
 function calcularProgreso() {
   let total = 0, hechos = 0;
   let meta = db.metaHoy || [];
   let itemsToCount = [];
+  
   if(meta.length > 0) {
     meta.forEach(id => { let it = findItem(id); if(it) itemsToCount.push(it); });
   } else {
     Object.values(db.config).forEach(cat => cat.items.forEach(i => { if(i.t === 'tg') itemsToCount.push(i); }));
   }
+
   itemsToCount.forEach(i => { 
     total++; 
     let val = getVal(i.id);
@@ -423,9 +529,35 @@ function findItem(id) {
   return null;
 }
 
+// --- VISTA PREMIUM (MOTIVACIONAL) ---
+function renderPremium() {
+  let html = '';
+  let meta = db.metaHoy || [];
+  if(meta.length === 0) {
+    html = '<p style="text-align:center; color:var(--muted);">No has seleccionado metas para hoy. Ve a Ajustes para elegirlas.</p>';
+  } else {
+    html += '<ul class="motiv-list">';
+    meta.forEach(id => {
+      let item = findItem(id);
+      if(item) {
+        let v = getVal(id);
+        let isDone = v && v !== 0;
+        html += `<li class="${isDone ? 'done' : ''}">
+          <span class="icon">${isDone ? '✅' : '⭕'}</span>
+          <span>${item.l} ${item.t==='time' && v && v.duration ? `(${Math.floor(v.duration/60)} min)` : ''}</span>
+        </li>`;
+      }
+    });
+    html += '</ul>';
+  }
+  document.getElementById('premium-content').innerHTML = html;
+}
+
+// --- INFORMES ---
 function updateRepFiltros() {
   let tipo = document.getElementById('rep-tipo').value;
   let div = document.getElementById('rep-extra-filtros');
+  
   if(tipo === 'cat') {
     let opts = '';
     Object.keys(db.config).forEach(k => opts += `<option value="${k}">${db.config[k].t}</option>`);
@@ -445,17 +577,24 @@ function updateRepFiltros() {
 }
 
 function getFechasRango() {
-  let rango = parseInt(document.getElementById('rep-tiempo').value);
+  let val = document.getElementById('rep-tiempo').value;
   let fechas = [];
   let hoyD = new Date();
-  if(document.getElementById('rep-tiempo').value === 'mes_act') {
+  
+  if(val === 'mes_act') {
     let y = hoyD.getFullYear(), m = hoyD.getMonth();
-    let daysInMonth = new Date(y, m+1, 0).getDate();
-    for(let i=1; i<=daysInMonth; i++) {
+    for(let i=1; i<=new Date(y, m+1, 0).getDate(); i++) {
       let d = new Date(y, m, i);
       if(d <= hoyD) fechas.push(d.toISOString().slice(0,10));
     }
+  } else if(val === '365') {
+    for(let i=0; i<12; i++) {
+      let d = new Date(); d.setMonth(d.getMonth() - i);
+      fechas.push(d.toISOString().slice(0,7)); // Formato YYYY-MM
+    }
+    fechas.reverse();
   } else {
+    let rango = parseInt(val);
     for(let i=rango-1; i>=0; i--) {
       let d = new Date(); d.setDate(hoyD.getDate() - i);
       fechas.push(d.toISOString().slice(0,10));
@@ -470,17 +609,68 @@ function generarInforme() {
   let canvas = document.getElementById('reportCanvas');
   let ctx = canvas.getContext('2d');
   let resumenTxt = document.getElementById('report-resumen');
+  let circle = document.getElementById('circle-chart');
+  let circlePath = circle.querySelector('.circle');
+  let circleText = document.getElementById('circle-text');
   
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   ctx.fillStyle = getComputedStyle(document.body).getPropertyValue('--card').trim() || '#fff';
   ctx.fillRect(0,0,canvas.width,canvas.height);
+  
+  circle.style.display = 'none';
+  canvas.style.display = 'block';
+
+  if(tipo === 'diario') {
+    canvas.style.display = 'none';
+    circle.style.display = 'block';
+    
+    let meta = db.metaHoy || [];
+    let total = meta.length;
+    let hechos = 0;
+    let desglose = '<h4>Desglose de hoy:</h4><ul style="padding-left:20px; font-size:0.85rem; line-height:1.6;">';
+    
+    if(total === 0) {
+      circlePath.setAttribute('stroke-dasharray', '0, 100');
+      circleText.textContent = '0%';
+      resumenTxt.innerHTML = 'No hay metas definidas para hoy.';
+      return;
+    }
+    
+    meta.forEach(id => {
+      let it = findItem(id);
+      if(!it) return;
+      let v = getVal(id);
+      let isDone = v && v !== 0;
+      if(isDone) hechos++;
+      
+      let valStr = '';
+      if(it.t === 'time' && v && v.duration) valStr = `${Math.floor(v.duration/60)} min`;
+      else if(it.t === 'num' && v) {
+        valStr = `${v.v} ${it.unit||''}`;
+        if(it.mg && v.v > 0) valStr += ` (${v.v * parseInt(it.mg)}mg)`;
+      }
+      else if(v) valStr = 'Hecho';
+      
+      let sub = getSub(id) ? ` - "${getSub(id)}"` : '';
+      desglose += `<li>${isDone?'✅':'⭕'} <b>${it.l}</b> ${valStr ? `(${valStr})` : ''} ${sub}</li>`;
+    });
+    desglose += '</ul>';
+    
+    let pct = Math.round((hechos/total)*100);
+    circlePath.setAttribute('stroke-dasharray', `${pct}, 100`);
+    circlePath.style.stroke = pct === 100 ? 'var(--ok)' : 'var(--primary)';
+    circleText.textContent = pct + '%';
+    
+    resumenTxt.innerHTML = `<div style="text-align:center; font-size:1.2rem; font-weight:bold; color:${pct===100?'var(--ok)':'var(--primary)'}; margin-bottom:15px;">¡Has conseguido un ${pct}% de tus metas!</div>` + desglose;
+    return;
+  }
+  
   let pad = 40, w = canvas.width, h = canvas.height;
   ctx.strokeStyle = "#ddd"; ctx.lineWidth = 1;
   ctx.beginPath(); ctx.moveTo(pad, h-pad); ctx.lineTo(w-pad, h-pad); ctx.moveTo(pad, pad); ctx.lineTo(pad, h-pad); ctx.stroke();
 
   if(tipo === 'cat') {
     let catId = document.getElementById('rep-cat-id').value;
-    if(!catId) return;
     let cat = db.config[catId];
     let totalItems = cat.items.length;
     let values = fechas.map(f => {
@@ -491,28 +681,18 @@ function generarInforme() {
       return (count/totalItems)*100;
     });
     dibujarLineas(ctx, fechas, values, w, h, pad, 0, 100);
-    resumenTxt.innerHTML = `Categoría: <b>${cat.t}</b><br>Muestra el porcentaje de actividades realizadas.`;
-  } else if(tipo === 'item') {
+    resumenTxt.innerHTML = `Categoría: <b>${cat.t}</b><br>Porcentaje de actividades realizadas.`;
+  } else {
     let itemId = document.getElementById('rep-item-id').value;
-    if(!itemId) return;
     let item = findItem(itemId);
     let values = fechas.map(f => {
       let v = db.registros[f] && db.registros[f][itemId] ? db.registros[f][itemId].v : 0;
-      if(typeof v === 'object' && v.duration) return Math.floor(v.duration/60); // en minutos
+      if(typeof v === 'object' && v.duration) return Math.floor(v.duration/60);
       return typeof v === 'number' ? v : (v ? 1 : 0);
     });
     let max = Math.max(...values, 1);
     dibujarLineas(ctx, fechas, values, w, h, pad, 0, max);
-    let unit = item.t === 'time' ? 'minutos' : (item.unit || 'veces');
-    resumenTxt.innerHTML = `Actividad: <b>${item.l}</b><br>Cantidad (${unit}) registrada por día.`;
-  } else {
-    let pcts = fechas.map(f => {
-      if(!db.registros[f]) return 0;
-      let keys = Object.keys(db.registros[f]);
-      return keys.filter(k => db.registros[f][k].v).length * 10;
-    });
-    dibujarBarras(ctx, fechas, pcts, w, h, pad);
-    resumenTxt.innerHTML = `Muestra el volumen total de registros diarios.`;
+    resumenTxt.innerHTML = `Actividad: <b>${item.l}</b>`;
   }
 }
 
@@ -531,69 +711,36 @@ function dibujarLineas(ctx, labels, values, w, h, pad, min, max) {
     ctx.beginPath(); ctx.arc(x,y,4,0,Math.PI*2); ctx.fillStyle = "#8A7BB8"; ctx.fill();
     if(i % Math.ceil(labels.length/5) === 0 || i === labels.length-1) {
       ctx.fillStyle = "#888"; ctx.font = "10px sans-serif"; ctx.textAlign = "center";
-      ctx.fillText(labels[i].slice(5), x, h-pad+15);
-    }
-  });
-}
-
-function dibujarBarras(ctx, labels, values, w, h, pad) {
-  let barW = (w - pad*2) / labels.length;
-  let max = Math.max(...values, 1);
-  values.forEach((v, i) => {
-    let bh = (v/max) * (h-pad*2);
-    ctx.fillStyle = "#5B9BD5";
-    ctx.fillRect(pad + i*barW + 2, h-pad-bh, barW-4, bh);
-    if(i % Math.ceil(labels.length/5) === 0 || i === labels.length-1) {
-      ctx.fillStyle = "#888"; ctx.font = "10px sans-serif"; ctx.textAlign = "center";
-      ctx.fillText(labels[i].slice(5), pad + i*barW + barW/2, h-pad+15);
+      ctx.fillText(labels[i].length>5 ? labels[i].slice(-5) : labels[i], x, h-pad+15);
     }
   });
 }
 
 function descargarPDF() {
-  if(typeof html2pdf === 'undefined') { alert("Cargando librería PDF... Espera 3 segundos."); return; }
   let loading = document.getElementById('pdf-loading');
+  if(!loading) {
+    loading = document.createElement('div');
+    loading.id = 'pdf-loading';
+    loading.className = 'loading-overlay';
+    loading.textContent = 'Generando PDF... ⏳';
+    document.body.appendChild(loading);
+  }
   loading.style.display = 'flex';
+  
   let element = document.querySelector('#view-informes .report');
-  let opt = { margin: 10, filename: 'Informe_' + hoy + '.pdf', image: { type: 'jpeg', quality: 0.98 }, html2canvas: { scale: 2 }, jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' } };
   let clone = element.cloneNode(true);
-  clone.querySelectorAll('.btn').forEach(b => b.remove());
-  clone.querySelectorAll('select').forEach(s => s.style.display = 'none');
+  clone.querySelectorAll('.btn, select, .filter-row').forEach(b => b.remove());
   clone.style.boxShadow = 'none'; clone.style.border = 'none';
-  html2pdf().set(opt).from(clone).save().then(() => { loading.style.display = 'none'; });
+  
+  html2pdf().set({ margin: 10, filename: 'Informe_MiDia.pdf', html2canvas: { scale: 2 } }).from(clone).save().then(() => {
+    loading.style.display = 'none';
+  });
 }
 
-function migrarDatos() {
-  let old = localStorage.getItem('miDiaFlex2');
-  if(!old) { alert("No se encontraron datos de la versión anterior."); return; }
-  if(!confirm("Esto combinará tus datos anteriores con la nueva versión. ¿Continuar?")) return;
-  try {
-    let oldDb = JSON.parse(old);
-    let newConfig = { ...db.config };
-    let oldDolor = null;
-    Object.keys(oldDb.config).forEach(k => { if(oldDb.config[k].t.toLowerCase().includes("dolor")) oldDolor = oldDb.config[k]; });
-    if(oldDolor) {
-      let fisicos = [], emociones = [];
-      const emoL = ["ansiedad","tristeza","agotamiento","fatiga","nervios","desánimo","irritab","alegr","entusias","rabia","frustra","desesper","culpa","vergüen","enojo","envidia","esperan","gratitud","decepci","orgullo","amor","pasión","desprecio","celos","compasi","miedo","asco"];
-      oldDolor.items.forEach(i => {
-        let isEmo = emoL.some(e => i.l.toLowerCase().includes(e));
-        if(isEmo) emociones.push(i); else fisicos.push(i);
-      });
-      newConfig["dolor"]["items"] = fisicos;
-      newConfig["emociones"]["items"] = [...newConfig["emociones"]["items"], ...emociones];
-    }
-    db.config = newConfig;
-    if(oldDb.registros) {
-      Object.keys(oldDb.registros).forEach(f => {
-        if(!db.registros[f]) db.registros[f] = {};
-        Object.assign(db.registros[f], oldDb.registros[f]);
-      });
-    }
-    save(); alert("¡Datos migrados con éxito!"); location.reload();
-  } catch(e) { alert("Error al migrar datos."); }
-}
-
+// --- AJUSTES Y CONFIG ---
 function renderAjustes() {
+  document.getElementById('orden-pref').value = db.orden || 'def';
+  
   let extraHtml = `<label style="font-size:0.85rem; font-weight:bold;">Meta extra (solo hoy):</label>
   <input type="text" class="input-text" placeholder="Ej: Ir al médico" value="${db.metaExtra||''}" onchange="db.metaExtra=this.value; save();">`;
   document.getElementById('meta-extra').innerHTML = extraHtml;
@@ -601,21 +748,21 @@ function renderAjustes() {
   let metaHtml = '';
   Object.keys(db.config).forEach(k => {
     let cat = db.config[k];
-    metaHtml += `<div style="font-size:0.8rem; font-weight:bold; color:var(--primary); margin-top:8px;">${cat.e} ${cat.t}</div>`;
+    metaHtml += `<div class="acc-group"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span>${cat.e} ${cat.t}</span><span>▼</span></div><div class="acc-body">`;
     cat.items.forEach(item => {
-      if(item.t === 'tg' || item.t === 'num') {
+      if(item.t === 'tg' || item.t === 'num' || item.t === 'time') {
         let checked = db.metaHoy && db.metaHoy.includes(item.id) ? 'checked' : '';
-        metaHtml += `<label><input type="checkbox" ${checked} onchange="toggleMeta('${item.id}', this.checked)"> ${item.l}</label>`;
+        metaHtml += `<label style="display:flex; gap:8px; padding:4px 0; font-size:0.85rem;"><input type="checkbox" ${checked} onchange="toggleMeta('${item.id}', this.checked)"> ${item.l}</label>`;
       }
     });
+    metaHtml += `</div></div>`;
   });
   document.getElementById('meta-selector').innerHTML = metaHtml;
 
   let configHtml = '';
   Object.keys(db.config).forEach(k => {
     let cat = db.config[k];
-    configHtml += `<div style="margin-bottom:15px; border:1px solid var(--line); padding:10px; border-radius:8px; background:var(--bg);">`;
-    configHtml += `<div class="config-item"><input type="text" value="${cat.t}" onchange="renameCat('${k}', this.value)"><button class="del-btn" onclick="delCat('${k}')">Borrar Cat</button></div>`;
+    configHtml += `<div class="acc-group"><div class="acc-head" onclick="this.parentElement.classList.toggle('open')"><span>${cat.t}</span><span>▼</span></div><div class="acc-body">`;
     cat.items.forEach(item => {
       configHtml += `<div class="config-item">
         <input type="text" value="${item.l}" onchange="editItem('${k}','${item.id}', 'l', this.value)">
@@ -623,19 +770,14 @@ function renderAjustes() {
           <option value="tg" ${item.t==='tg'?'selected':''}>Sí/No</option>
           <option value="num" ${item.t==='num'?'selected':''}>Cantidad</option>
           <option value="sc" ${item.t==='sc'?'selected':''}>Escala 0-10</option>
-          <option value="time" ${item.t==='time'?'selected':''}>Tiempo</option>
-        </select>
-        <select onchange="editItem('${k}','${item.id}', 'sub', this.value)">
-          <option value="" ${item.sub!=='text'?'selected':''}>Sin texto</option>
-          <option value="text" ${item.sub==='text'?'selected':''}>Con texto</option>
+          <option value="time" ${item.t==='time'?'selected':''}>Duración (Tiempo)</option>
         </select>
         <button class="del-btn" onclick="delItem('${k}','${item.id}')">X</button>
       </div>`;
     });
-    configHtml += `<button class="add-btn" onclick="addItem('${k}')">+ Añadir Actividad</button>`;
-    configHtml += `</div>`;
+    configHtml += `<button class="add-btn" onclick="addItem('${k}')">+ Añadir Actividad</button></div></div>`;
   });
-  configHtml += `<button class="btn" onclick="addCat()">+ Nueva Categoría</button>`;
+  configHtml += `<button class="btn" style="margin-top:15px;" onclick="addCat()">+ Nueva Categoría</button>`;
   document.getElementById('config-lista').innerHTML = configHtml;
 }
 
@@ -643,15 +785,13 @@ function toggleMeta(id, isChecked) {
   if(!db.metaHoy) db.metaHoy = [];
   if(isChecked) { if(!db.metaHoy.includes(id)) db.metaHoy.push(id); }
   else { db.metaHoy = db.metaHoy.filter(x => x !== id); }
-  save(); calcularProgreso();
+  save(); calcularProgreso(); renderPremium();
 }
 
-function renameCat(k, name) { db.config[k].t = name; save(); render(); }
-function delCat(k) { if(confirm('¿Borrar categoría?')) { delete db.config[k]; save(); render(); renderAjustes(); } }
 function editItem(k, id, field, val) {
   let item = db.config[k].items.find(i => i.id === id);
   item[field] = val;
-  save(); render(); if(field==='t') renderAjustes();
+  save(); render(); renderAjustes();
 }
 function delItem(k, id) { if(confirm('¿Borrar actividad?')) { db.config[k].items = db.config[k].items.filter(i => i.id !== id); save(); render(); renderAjustes(); } }
 function addItem(k) {
@@ -662,26 +802,23 @@ function addCat() {
   let name = prompt("Nombre de la nueva categoría:");
   if(name) { db.config['c' + Date.now()] = { t: name, e: "📌", items: [] }; save(); render(); renderAjustes(); }
 }
-function exportar() {
-  let a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify(db)], {type:'application/json'}));
-  a.download = 'mi_dia_premium.json'; a.click();
-}
-function importar(e) {
-  let file = e.target.files[0]; if(!file) return;
-  let reader = new FileReader();
-  reader.onload = function(evt) {
-    try {
-      let imported = JSON.parse(evt.target.result);
-      if(imported.config && imported.registros) { db = imported; save(); alert("Copia importada."); location.reload(); }
-    } catch(err) { alert("Error al leer archivo."); }
-  };
-  reader.readAsText(file);
-}
-function borrarTodo() {
-  if(confirm("¿Borrar todos los datos?")) { localStorage.removeItem('miDiaPremium'); location.reload(); }
+
+function migrarDatos() {
+  let old = localStorage.getItem('miDiaPremium');
+  if(!old) { alert("No se encontraron datos de la versión anterior en este móvil."); return; }
+  if(!confirm("Esto recuperará la configuración y datos que tenías en la versión anterior. ¿Continuar?")) return;
+  try {
+    let oldDb = JSON.parse(old);
+    db.registros = oldDb.registros || {};
+    if(oldDb.config) {
+       // Mergear configuración por si faltaba algo
+       Object.keys(oldDb.config).forEach(k => { if(!db.config[k]) db.config[k] = oldDb.config[k]; });
+    }
+    save(); alert("¡Datos recuperados!"); location.reload();
+  } catch(e) { alert("Error al recuperar."); }
 }
 
+// Inicializar
 render();
 </script>
 </body>
